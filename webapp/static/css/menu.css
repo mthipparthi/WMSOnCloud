@@ -1,0 +1,124 @@
+
+body
+{
+	background:#f7f7f7;
+	font-size: 1.2em;
+	font-family:garamond;
+	color:black;
+	
+}
+
+.container{
+width:90%;
+}
+
+.row {
+    /*outline: 1px solid blue;*/
+	border:1px solid black;
+}
+.wborder1 {
+    outline: 1px solid blue;
+}
+.mastmargin1 {
+	clear: both;
+	width: 100%;
+	display: block;
+	border:.1em solid black;
+}
+.clear {
+	clear: both;
+	height: 5em;
+	width: 100%;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+.header-wrapper {
+    position: relative;
+   	height:15%;
+	background: white;
+}
+
+.header-wrapper  p{
+	font-size: 1.3em;
+	font-family:garamond;
+	font-weight:bold;
+}
+.header-wrapper .heading-text{
+padding: 4em 4em;
+font-size:.5em;
+font-weight:bold;
+}
+.content-wrapper2 {
+	
+	padding: 1em 0em;
+	overflow:hidden;
+	position: relative;
+   	height:100%;
+	background: white;
+	
+}
+.footer-wrapper {
+    position: relative;
+   	height:10%;
+	background: black;
+}
+
+.form-horizontal-wrapper{
+
+    height:16em;
+	width: 25em;
+	border:1px solid black;
+	position:absolute;
+	font-size: 1.2em;
+	font-family:garamond;
+	padding: 1em 0em;
+	border-radius: 1em 1em 1em 1em;
+}
+.btn-primary {
+  .buttonBackground(@black, @white); //(button, hover)
+}
+.col-cxs-2{
+		width=30px;
+}
+
+.login-form{
+	
+	height: 15em;
+	width: 30em;
+	
+	border:1px solid silver;
+	position:absolute;
+	
+	
+	background-color: #B0C4DE;
+	border-radius: 1em 1em 1em 1em;
+	color: #fff;
+	font-size: 1em;
+	font-family:garamond;
+	padding: 4em 12em;
+}
+
+.glyphicon { margin-right:10px; }
+.panel-body { padding:0px; }
+.panel-body table tr td { padding-left: 15px }
+.panel-body .table {margin-bottom: 0px; }
+
+.navbar-xs { min-height:22px; border-radius:0;} 
+.navbar-xs .navbar-brand{ padding: 2px 8px;font-size: 14px;line-height: 14px; } 
+.navbar-xs .navbar-nav > li > a { border-right:1px solid #ddd; padding-top: 2px; padding-bottom: 2px; line-height: 16px }
+
+.navbar-nav 	.x
+{
+	height: 3em;
+	font-size: 1.2em;
+	font-family:garamond;
+	font-weight:bold;
+	border:1px solid silver;
+}
+.btn-toolbar{
+	font-size: 2em;
+	font-family:garamond;
+	font-weight:bold;
+	
+}

@@ -1,0 +1,282 @@
+/*
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }  */
+ /*  *{
+ 
+	font-family: garamond;
+	font-style: bold;
+	font-weight: bold;
+ }   */
+ 
+body
+{
+	background:#f7f7f7;
+	font-size: 1.2em;
+	font-family:garamond;
+	color:black;
+
+}
+.container{
+width:80%;
+}
+
+.row {
+    /*outline: 1px solid blue;*/
+	border:1px solid #cb0303;
+}
+.wborder1 {
+    outline: 1px solid blue;
+}
+.mastmargin1 {
+	clear: both;
+	width: 100%;
+	display: block;
+	/*border:.1em solid black;*/
+}
+.clear {
+	clear: both;
+	height: 5em;
+	width: 100%;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+.header-wrapper {
+    position: relative;
+   	height:15%;
+	background: white;
+}
+
+.header-wrapper  p{
+	font-size: 1.3em;
+	font-family:garamond;
+	font-weight:bold;
+}
+.header-wrapper .heading-text{
+padding: 4em 4em;
+font-size:.5em;
+font-weight:bold;
+}
+.content-wrapper {
+	padding: 6em 32em;
+	overflow:hidden;
+	position: relative;
+   	height:60%;
+	background: white;
+	
+}
+.footer-wrapper {
+    position: relative;
+   	height:25%;
+	background: black;
+}
+
+.form-horizontal-wrapper{
+
+    height:16em;
+	width: 25em;
+	border:1px solid black;
+	position:absolute;
+	font-size: 1.2em;
+	font-family:garamond;
+	padding: 1em 0em;
+	border-radius: 1em 1em 1em 1em;
+	background:#f5f5f5;
+}
+.btn-primary {
+  .buttonBackground(@black, @white); //(button, hover)
+}
+.col-cxs-2{
+		width=30px;
+}
+
+.login-form{
+	
+	height: 15em;
+	width: 30em;
+	
+	border:1px solid silver;
+	position:absolute;
+	
+	
+	background-color: #B0C4DE;
+	border-radius: 1em 1em 1em 1em;
+	color: #fff;
+	font-size: 1em;
+	font-family:garamond;
+	padding: 4em 12em;
+}
+
+
+
+#page-wrapper {
+	width:80%;
+	height:100%;
+	margin:0 auto;
+	border:1px solid silver;
+	position:relative;
+	background: #efefef;
+}
+#header-pane {
+   	float;left;
+    width:100%;
+	height:20%;
+	background:white;
+	position:relative;
+	padding:10px;
+}
+#left-pane {
+    float:left;
+    width:20%;
+	height:80%;
+	background:white;
+	position:relative;
+	padding-bottom:60px;
+}
+#main-pane {
+    float:right;
+    width:100%;
+	height:75%;
+	background:white;
+	position:relative;
+	padding-bottom: 5%; /* This padding is for the footer,so that footer can exactly sit after main pane */
+}
+#footer-pane{
+	position:absolute;
+	bottom:0;
+   	width:100%;
+	height:5%;
+	background:#B0C4DE;
+}
+
+
+/*
+.head-pane-navigator {width: 80%; background-color: #005555;}
+.head-pane-navigator ul {margin: 0; padding: 30px; float: right;}
+.head-pane-navigator ul li {display: inline;}
+.head-pane-navigator ul li a {float: right; text-decoration: none; color: white; padding: 10.5px 11px;background-color:  #005555;}
+.head-pane-navigator ul li a:visited {color: white;}
+.head-pane-navigator ul li a:hover, .head-pane-navigator ul li .current {color: white; background-color: #5FD367;}   */
+
+
+/*
+#logo{
+	width:20%;
+	height:100%;
+	position:relative;
+} */
+#head-pane-navigator{
+	float:right;
+	width:100%;
+	height: 30%;
+	top: 80%;
+	bottom:0;
+	position:absolute;
+	background-color: #B0C4DE;
+}
+
+
+#container3 {
+    float:left;
+    width:100%;
+    background:green;
+    overflow:hidden;
+    position:relative;
+}
+#container2 {
+    float:left;
+    width:100%;
+    background:yellow;
+    position:relative;
+    right:30%;
+}
+#container1 {
+    float:left;
+    width:100%;
+    background:red;
+    position:relative;
+    right:40%;
+}
+#col1 {
+    float:left;
+    width:30%;
+    position:relative;
+    left:70%;
+}
+#col2 {
+    float:left;
+    width:40%;
+    position:relative;
+    left:70%;
+}
+#col3 {
+    float:left;
+    width:30%;
+    position:relative;
+    left:70%;
+}
+
+#login {
+	margin: 50px auto;
+	width: 400px;
+}
+
+#login h2 {
+	background-color: #B0C4DE;
+	-webkit-border-radius: 20px 20px 0 0;
+	-moz-border-radius: 20px 20px 0 0;
+	border-radius: 20px 20px 0 0;
+	color: #fff;
+	font-size: 28px;
+	font-family:garamond;
+	padding: 20px 26px;
+}
+
+#login h2 span[class*="fontawesome-"] {
+	margin-right: 14px;
+}
+
+#login fieldset {
+	background-color: #fff;
+	-webkit-border-radius: 0 0 20px 20px;
+	-moz-border-radius: 0 0 20px 20px;
+	border-radius: 0 0 20px 20px;
+	padding: 20px 26px;
+}
+
+#login fieldset p {
+	color: #777;
+	margin-bottom: 14px;
+}
+
+#login fieldset p:last-child {
+	margin-bottom: 0;
+}
+
+#login fieldset input {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#login fieldset input[type="email"], #login fieldset input[type="password"] {
+	background-color: #eee;
+	color: #777;
+	padding: 4px 10px;
+	width: 328px;
+}
+
+#login fieldset input[type="submit"] {
+	background-color: #B0C4DE;
+	color: #fff;
+	display: block;
+	margin: 0 auto;
+	padding: 4px 0;
+	width: 100px;
+}
+
+#login fieldset input[type="submit"]:hover {
+	background-color: #28ad63;
+}	
