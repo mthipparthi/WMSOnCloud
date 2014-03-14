@@ -7,8 +7,10 @@ from django.views.generic import TemplateView
 from django.contrib import admin
 admin.autodiscover()
 
+import storemaster.urls
+
 urlpatterns = patterns('',
-    url(r'^$', TemplateView.as_view(template_name='base.html')),
+    url(r'^$', TemplateView.as_view(template_name='index.html')),
 
     # Examples:
     # url(r'^$', 'webapp.views.home', name='home'),
@@ -19,6 +21,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^storemaster/', include(storemaster.urls)),
 )
 
 # Uncomment the next line to serve media files in dev.
