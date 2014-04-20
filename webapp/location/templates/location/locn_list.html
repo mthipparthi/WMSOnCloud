@@ -1,0 +1,29 @@
+{% block content %}
+
+<h1>Location List</h1>
+<ul>
+  <table style="width:1000px">
+  <tr>
+    <th>Store ID</th>
+    <th>Aisle</th>
+    <th>Bay</th>
+	<th>Level</th>
+	<th>Display Location</th>
+	<th>Create Date Time</th>
+  </tr>
+  {% for locn in object_list %}
+  <tr>
+    <td>{{ locn.store_id }}</td>
+	<td>{{ locn.aisle }}</td>
+	<td>{{ locn.bay }}</td>
+	<td>{{ locn.level }}</td>
+	<td><a href="{% url "locn-edit" pk=locn.location_id %}">{{ locn.dsp_location }}</a></td>
+	<td>{{ locn.create_dateTime }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+</ul>
+
+<a href="{% url "locn-new" %}">Add Location</a>
+{% endblock %}
+

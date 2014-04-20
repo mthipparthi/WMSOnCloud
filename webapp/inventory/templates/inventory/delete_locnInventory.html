@@ -1,0 +1,16 @@
+
+{% block content %}
+
+<h1>Delete Location Inventory</h1>
+
+<p>Are you sure you want to delete the location inventory {{ locationinventory }}?</p>
+
+<form action="{% url "locninventory-remove" pk=locationinventory.id %}" method="POST">
+  {% csrf_token %}
+  
+  <input type="submit" value="Yes, delete." />
+  <a href="{% url "locnInventory-list" %}">No, cancel.</a>
+ 
+</form>
+
+{% endblock %}

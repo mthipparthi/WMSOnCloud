@@ -1,0 +1,16 @@
+
+{% block content %}
+
+<h1>Delete Location</h1>
+
+<p>Are you sure you want to delete the location {{ locationmaster }}?</p>
+
+<form action="{% url "locn-remove" pk=locationmaster.location_id %}" method="POST">
+  {% csrf_token %}
+  
+  <input type="submit" value="Yes, delete." />
+  <a href="{% url "locn-list" %}">No, cancel.</a>
+ 
+</form>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% block content %}
+
+<h1>Item Master List</h1>
+<ul>
+  <form action="/item/search/" method="post">
+    {% csrf_token %}
+    <label for="itemname">Item Name</label> 
+    <input type="text" name="item_name">
+	<label for="itembarcode">Item Barcode</label> 
+    <input type="text" name="item_barcode">
+    <label for="itemdesc">Item Description</label> 
+    <input type="text" name="item_description">
+    <input type="submit" value="Search">
+  </form>
+  <br>
+  <br>
+  
+  <table style="width:1000px">
+  <tr>
+    <th>Item Name</th>
+    <th>Description</th>
+    <th>Style</th>
+	<th>Size</th>
+	<th>Country Of Origin</th>
+	<th>Display SKU</th>
+	<th>Item Category</th>
+	<th>Create Date Time</th>
+  </tr>
+  {% for item in object_list %}
+  <tr>
+    <td><a href="{% url "item-edit" pk=item.sku_id %}">{{ item }}</a></td>
+    <td>{{ item.item_description }}</td>
+    <td>{{ item.style }}</td>
+	<td>{{ item.size }}</td>
+	<td>{{ item.country_of_origin }}</td>
+	<td>{{ item.dsp_sku }}</td>
+	<td>{{ item.item_category }}</td>
+	<td>{{ item.create_dateTime }}</td>
+	<td>
+	<form action="/item/assignLocnSearch/" method="post" >
+      {% csrf_token %}
+      <input type="hidden" name="sku_name" value={{ item.sku_id }}>
+      <input type="submit" value="Assign Location">
+    </form>
+	</td>
+  </tr>
+  {% endfor %}
+  </table>
+</ul>
+
+<a href="{% url "item-new" %}">Add Item</a>
+{% endblock %}
+

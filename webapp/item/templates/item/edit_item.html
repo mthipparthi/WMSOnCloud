@@ -1,0 +1,24 @@
+
+{% block content %}
+
+{% if itemmaster.sku_id %}
+<h1>Update Item</h1>
+{% else %}
+<h1>Add Item</h1>
+{% endif %}
+
+<form action="{{ action }}" method="POST">
+  {% csrf_token %}
+  <ul>
+    {{ form.as_ul }}
+  </ul>
+  <input id="save_item" type="submit" value="Save" />
+</form>
+
+<a href="{% url "item-list" %}">back to list</a>
+
+{% if itemmaster.sku_id %}
+<a href="{% url "item-remove" pk=itemmaster.sku_id %}">Delete</a>
+{% endif %}
+
+{% endblock %}

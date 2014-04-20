@@ -1,0 +1,56 @@
+{% block content %}
+
+<h1>Assign Location</h1>
+<ul>
+  {% if error %}
+        <p>Invalid location assignment.</p>
+  {% endif %}
+  
+  <table style="width:1000px">
+  <tr>
+    <th>Item Name</th>
+    <th>Description</th>
+    <th>Style</th>
+	<th>Size</th>
+	<th>Country Of Origin</th>
+	<th>Display SKU</th>
+	<th>Item Category</th>
+	<th>Create Date Time</th>
+  </tr>
+  
+ {% for i in item %}
+  <tr>
+    <td><a href="{% url "item-edit" pk=i.sku_id %}">{{ i }}</a></td>
+    <td>{{ i.item_description }}</td>
+    <td>{{ i.style }}</td>
+	<td>{{ i.size }}</td>
+	<td>{{ i.country_of_origin }}</td>
+	<td>{{ i.dsp_sku }}</td>
+	<td>{{ i.item_category }}</td>
+	<td>{{ i.create_dateTime }}</td>
+	<td>
+  </tr>
+  </table>
+
+  <form name="AssignLocation" action="/inventory/assignLocation/" method="post">
+    {% csrf_token %}
+	<label>Select Location</label>
+    <select name="locnlist">
+      {% for locn in locns %}
+      <option value={{ locn.location_id }}>{{ locn.dsp_location }}</option>
+	  {% endfor %}
+    </select>
+    <input type="hidden" name="skuid" value={{ i.sku_id }}>
+	<input type="text" name="dsplocn">
+    <input type="submit" value="Assign Location">
+	</script>
+  </form>
+  
+  {% endfor %}
+  
+</ul>
+{% endblock %}
+
+  
+
+

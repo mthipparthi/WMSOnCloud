@@ -1,0 +1,10 @@
+
+{% block content %}
+
+<h1> {{locationinventory}} </h1>
+
+<p>Display Location: {{ locationinventory.dsp_location }}</p>
+<p>Display SKU: {{ locationinventory.dsp_sku }}</p>
+<a href="{% url "locninventory-edit" pk=locationinventory.id %}">Edit</a>
+
+{%endblock%}

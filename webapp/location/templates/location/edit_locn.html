@@ -1,0 +1,24 @@
+
+{% block content %}
+
+{% if locn.location_id %}
+<h1>Update Location</h1>
+{% else %}
+<h1>Add Location</h1>
+{% endif %}
+
+<form action="{{ action }}" method="POST">
+  {% csrf_token %}
+  <ul>
+    {{ form.as_ul }}
+  </ul>
+  <input id="save_item" type="submit" value="Save" />
+</form>
+
+<a href="{% url "locn-list" %}">back to list</a>
+
+{% if locationmaster.location_id %}
+<a href="{% url "locn-remove" pk=locationmaster.location_id %}">Delete</a>
+{% endif %}
+
+{% endblock %}

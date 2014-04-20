@@ -1,0 +1,9 @@
+
+{% block content %}
+
+<h1> {{locationmaster}} </h1>
+
+<p>Display Location: {{ locationmaster.dsp_location }}</p>
+<a href="{% url "locn-edit" pk=locationmaster.location_id %}">Edit</a>
+
+{%endblock%}

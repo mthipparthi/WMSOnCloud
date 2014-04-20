@@ -1,0 +1,39 @@
+{% block content %}
+
+<h1>Location Inventory List</h1>
+<ul>
+
+  <form action="/inventory/search/" method="post">
+    {% csrf_token %}
+    <label for="dspskulabel">Display SKU</label> 
+    <input type="text" name="dspsku">
+    <label for="dsplocnlabel">Display Location</label> 
+    <input type="text" name="dsplocn">
+    <input type="submit" value="Search">
+  </form>
+  <br>
+  <br>
+    
+  <table style="width:1000px">
+  <tr>
+    <th>Store ID</th>
+    <th>Display Location</th>
+    <th>Display SKU</th>
+	<th>Quantity</th>
+	<th>Last Sell Date</th>
+	<th>Create Date Time</th>
+  </tr>
+  {% for locnInventory in object_list %}
+  <tr>
+    <td>{{ locnInventory.store_id }}</td>
+    <td><a href="{% url "locninventory-edit" pk=locnInventory.id %}">{{ locnInventory.dsp_location }}</a></td>
+    <td><a href="{% url "locninventory-edit" pk=locnInventory.id %}">{{ locnInventory.dsp_sku }}</a></td>
+	<td>{{ locnInventory.inventory_qty }}</td>
+    <td>{{ locnInventory.last_sell_datetime }}</td>
+	<td>{{ locnInventory.create_dateTime }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+</ul>
+
+{% endblock %}
