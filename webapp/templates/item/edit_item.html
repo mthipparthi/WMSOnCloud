@@ -1,0 +1,15 @@
+{%    load    crispy_forms_tags    %}
+{%    block    content    %}
+<!--    <form    action=""    method="POST">{%    csrf_token    %}
+    {{form    |    crispy    }}
+    <input    type="submit"    value="Create"    />
+</form>    -->
+
+
+<form   class="form-horizontal" id="id_create_item_form" name="id_create_item_form" action="/item/add/"    method="POST">{%    csrf_token    %}
+    {%    crispy    form    %}
+</form>
+
+
+{%    endblock    %}
+

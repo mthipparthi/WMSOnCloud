@@ -27,6 +27,20 @@
 
       });
 
+	    $( "#id_create_item" ).click(function( event ) {
+      event.preventDefault();
+      var url = $(this).attr("href");
+      $("#workarea").load($(this).attr("href"));
+
+      });
+	  
+	   $( "#id_search_items" ).click(function( event ) {
+      event.preventDefault();
+      var url = $(this).attr("href");
+      $("#workarea").load($(this).attr("href"));
+
+      });
+
    });
   </script>
 
@@ -60,12 +74,12 @@
                             <table    class="table">
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-pencil    text-primary"></span><a    href="http://www.jquery2dotnet.com">Articles</a>
+					<a  href="/item/add/"    id="id_create_item"    >Create Item</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-flash    text-success"></span><a    href="http://www.jquery2dotnet.com">News</a>
+					<a  href="/item/search/"  id="id_search_items"    >Search Items</a>
                                     </td>
                                 </tr>
                                 <tr>
