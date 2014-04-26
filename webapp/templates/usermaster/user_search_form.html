@@ -1,0 +1,56 @@
+{%    load    crispy_forms_tags    %}
+{%    block    content    %}
+<!--    <form    action=""    method="POST">{%    csrf_token    %}
+    {{form    |    crispy    }}
+    <input    type="submit"    value="Create"    />
+</form>    -->
+
+
+<form  id="id_UserSearchForm" name="id_UserSearchForm" action="/usermaster/searchusers/"    method="POST">{%    csrf_token    %}
+    {%    crispy    form    %}
+</form>
+
+<script type="text/javascript">
+
+$("#id_UserSearchForm").submit(function(event) {
+
+    /* stop form from submitting normally  */
+    event.preventDefault();
+
+    /* get some values from elements on the page: */
+    var $form = $( this ),
+    url = $form.attr( 'action' );
+
+    var posting = $.post( url, { email: $('#id_email').val(), first_name: $('#id_first_name').val(), last_name: $('#id_last_name').val(),
+                  enterprise_id: $('#id_enterprise_id').val(),store_id: $('#id_store_id').val(),'csrfmiddlewaretoken': '{{ csrf_token }}'} );
+
+
+    var tth='<table class="table table-condensed table-hover"> <thead> <tr> <th>Email </th> <th>First Name</th> <th>Last Name</th> <th>Active</th> <th>Store ID</th> <th>Enterprise ID</th> </tr> </thead>'
+    var tbd= '<tbody id="tbody">'
+    var tcl='</tbody> </table>'
+    posting.done(function( data ) {
+        $.each(data, function(index, element) {
+                var eachrow = "<tr>"
+                 + "<td>" + element.fields.email + "</td>"
+                 + "<td>" + element.fields.first_name + "</td>"
+                 + "<td>" + element.fields.last_name + "</td>"
+                 + "<td>" + element.fields.is_active + "</td>"
+                 + "<td>" + element.fields.store_id + "</td>"
+                 + "<td>" + element.fields.enterprise_id + "</td>"
+                 + "</tr>";
+                tbd = tbd + eachrow;
+        });
+
+        var tableData= tth+tbd+tcl;
+        $('#workarea').html(tableData);
+    });
+
+     /* Error Handling */
+     posting.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+     });
+
+ });
+</script>
+
+{%  endblock    %}

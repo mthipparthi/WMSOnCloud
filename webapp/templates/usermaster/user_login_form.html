@@ -1,0 +1,12 @@
+{%    load    crispy_forms_tags    %}
+{%    block    content    %}
+<script>
+
+</script>
+<form   action="/usermaster/userlogin/"   method="POST">{%    csrf_token  %}
+    {%  crispy  form    %}
+</form>
+
+
+{%    endblock    %}
+
