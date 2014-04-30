@@ -71,7 +71,34 @@ class ItemMasterUpdateForm(forms.ModelForm):
                   "unit_height", "unit_volume", "item_category")
 
 
-class ItemSearchForm(forms.Form):
+class ItemSearchForm1(forms.Form):
     class Meta:
         model = ItemMaster
         fields =    ("item_name",  'item_barcode' , 'item_description')
+
+class  ItemSearchForm(forms.Form):
+    """
+    ItemSearchForm
+    """
+    def __init__(self,    *args,    **kwargs):
+        super(ItemSearchForm,    self).__init__(*args,    **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_id = 'id_item_search_form'
+        self.helper.form_method = 'POST'
+        self.helper.form_action = ''
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-4'
+        self.helper.layout = Layout(
+                        Fieldset( 'Item Search Criteria',
+                          'item_name',
+                          'item_barcode',
+                          'item_description',
+                        ),
+                        #Submit('submit',    'Submit',    css_class='btn    btn-default'),
+                        Div(Submit('submit',    'Search',    css_class='btn    btn-default'),css_class='col-lg-offset-3    col-lg-9',),
+                    )
+
+    item_name = forms.CharField(label = 'Item Name',required = False)
+    item_barcode = forms.CharField(label = 'Item Barcode',required=False)
+    item_description = forms.CharField(label = 'Item Description',max_length=30,required=False)
