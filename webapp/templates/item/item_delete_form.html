@@ -1,0 +1,16 @@
+
+{% block content %}
+
+<h1>Delete Item</h1>
+
+<p>Are you sure you want to delete the item {{ itemmaster }}?</p>
+
+<form action="{% url "item-remove" pk=itemmaster.sku_id %}" method="POST">
+  {% csrf_token %}
+
+  <input type="submit" value="Yes, delete." />
+  <a href="{% url "item-list" %}">No, cancel.</a>
+
+</form>
+
+{% endblock %}

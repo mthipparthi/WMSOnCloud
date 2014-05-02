@@ -1,0 +1,12 @@
+{%    load    crispy_forms_tags    %}
+{%    block    content    %}
+
+<form   class="form-horizontal" id="id_asign_locan_form" name="id_asign_locan_form" action="/inventory/assignLocation"    method="POST">
+{%    csrf_token    %}
+{%    crispy    form    %}
+
+</form>
+
+{%    endblock    %}
+
+
