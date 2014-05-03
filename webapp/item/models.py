@@ -75,7 +75,7 @@ class ItemMaster(models.Model):
                                     blank=False,
                                     max_digits=6,
                                     decimal_places=2,
-                                    help_text="Cargo/shipping cost specified in %")                                    
+                                    help_text="Cargo/shipping cost specified in %")
     unit_weight = models.DecimalField(null=False,
                                     blank=False,
                                     max_digits=6,
@@ -85,7 +85,7 @@ class ItemMaster(models.Model):
                                     blank=False,
                                     max_digits=6,
                                     decimal_places=2,
-                                    help_text="Height of the individual item entered in meters <0.100>")                                     
+                                    help_text="Height of the individual item entered in meters <0.100>")
     unit_volume = models.DecimalField(null=False,
                                     blank=False,
                                     max_digits=6,
@@ -99,13 +99,13 @@ class ItemMaster(models.Model):
     create_user_name = models.CharField(max_length=10,
                                         help_text="User id created the record")
     # return the item name as the item name
-    def __unicode__(self):  
+    def __unicode__(self):
         return self.item_name
-    
+
     # reverse url
     def get_absolute_url(self):
         return reverse('item-view', kwargs={'pk': self.pk})
-        
+
     def save(self):
         self.dsp_sku = self.item_name
         self.dsp_sku += ":"
@@ -115,6 +115,6 @@ class ItemMaster(models.Model):
         self.dsp_sku += ":"
         self.dsp_sku += self.country_of_origin
         super(ItemMaster, self).save()
-    
-    
+
+
 

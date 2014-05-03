@@ -1,9 +1,0 @@
-
-{% block content %}
-
-<h1> {{itemmaster}} </h1>
-
-<p>Item Name: {{ itemmaster.item_name }}</p>
-<a href="{% url "item-edit" pk=itemmaster.sku_id %}">Edit</a>
-
-{%endblock%}

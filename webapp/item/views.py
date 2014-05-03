@@ -8,7 +8,9 @@ from django.views.generic import ListView
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
 from django.views.generic import DeleteView
+from item.forms import ItemMasterCreateForm
 from item.forms import ItemMasterUpdateForm
+from item.forms import ItemLocationAssignmentForm
 from item.forms import ItemSearchForm
 from location.models import LocationMaster
 
@@ -29,11 +31,11 @@ class ListItemMater(ListView):
 
 class CreateItemMater(CreateView):
     model = ItemMaster
-    template_name = 'item/edit_item.html'
-    form_class = ItemMasterUpdateForm
+    template_name = 'item/item_create_form.html'
+    form_class = ItemMasterCreateForm
 
-    def get_success_url(self):
-        return reverse('item-list')
+    #def get_success_url(self):
+    #    return reverse('item-list')
 
     def get_context_data(self, **kwargs):
         context = super(CreateItemMater, self).get_context_data(**kwargs)
@@ -105,12 +107,21 @@ def ItemSearchView(request):
             return HttpResponse(data, **response_kwargs)
     else:
         form = ItemSearchForm()
-    return render(request,'item/item_search_list.html',{'form':form,})
+    return render(request,'item/item_search_list_form.html',{'form':form,})
 
 def AssignLocationSearch(request):
-    if('sku_name' in request.POST and request.POST['sku_name']!= ""):
-        item = ItemMaster.objects.filter(pk=request.POST.get('sku_name'))
-        locns = LocationMaster.objects.all()
-        return render(request, 'item/item_locn_assign.html', {'item': item, 'locns': locns})
+    if request.method == 'POST':
+        form = ItemLocationAssignmentForm(request.POST)
+        if form.is_valid():
+            sku_id = request.POST.get('item_name',    '')
+            dsp_location = request.POST.get('item_barcode',    '')
+            data = {'Success' : 'SUCCESS'}
+            response_kwargs={}
+            response_kwargs['content_type'] = 'application/json'
+            print data
+            return HttpResponse(data, **response_kwargs)
     else:
-        return render(request, 'item/item_locn_assign.html', {'error': True})
+        locns = LocationMaster.objects.all()
+        items = ItemMaster.objects.all()
+        form = ItemLocationAssignmentForm()
+    return render(request,'item/item_locn_assign_form.html',{'form':form,'locns':locns,'items':items})

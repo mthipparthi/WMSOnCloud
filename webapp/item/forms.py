@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from item.models import ItemMaster
+from location.models import LocationMaster
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
@@ -22,10 +23,10 @@ class ItemMasterUpdateForm1(forms.ModelForm):
 
 class ItemMasterUpdateForm(forms.ModelForm):
     """
-       ItemMasterUpdateForm
+       ItemMasterCreateForm
     """
     def    __init__(self,    *args,    **kwargs):
-        super(ItemMasterUpdateForm,    self).__init__(*args,    **kwargs)
+        super(ItemMasterCreateForm,    self).__init__(*args,    **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
         self.helper.form_id = 'id_create_item_form'
@@ -46,14 +47,66 @@ class ItemMasterUpdateForm(forms.ModelForm):
                     'item_category',
                     ),
                  Tab(
-                    'Cost',
+                    'Cost            ',
                     'unit_price',
                     'retail_price',
                     'wholesale_price',
                     'declaration_cost',
                      ),
                  Tab(
-                     'Weight   Info',
+                     'Weight   Info  ',
+                     'unit_height',
+                     'unit_weight',
+                     'unit_volume',
+                     )
+
+                 ),
+                 Div(Submit('submit',    'Save',    css_class='btn    btn-default'),css_class='col-lg-offset-3    col-lg-9',),
+            )
+
+    class Meta:
+        model = ItemMaster
+        fields = ("item_name", "item_barcode", "item_description", "style",
+                  "size", "country_of_origin", "unit_price", "retail_price",
+                  "wholesale_price", "declaration_cost", "unit_weight",
+                  "unit_height", "unit_volume", "item_category")
+
+
+
+class ItemMasterCreateForm(forms.ModelForm):
+    """
+       ItemMasterCreateForm
+    """
+    def    __init__(self,    *args,    **kwargs):
+        super(ItemMasterCreateForm,    self).__init__(*args,    **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_id = 'id_create_item_form'
+        self.helper.form_name = 'id_create_item_form'
+        self.helper.form_action = ''
+        self.helper.form_method = 'POST'
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-4'
+        self.helper.layout = Layout(
+            TabHolder(
+                Tab('Item Description',
+                    'item_name',
+                    'item_barcode',
+                    'item_description',
+                    'style',
+                    'size',
+                    'country_of_origin',
+                    'item_category',
+                    ),
+                 Tab(
+                    'Cost            ',
+                    'unit_price',
+                    'retail_price',
+                    'wholesale_price',
+                    'declaration_cost',
+                     ),
+                 Tab(
+                     'Weight   Info  ',
                      'unit_height',
                      'unit_weight',
                      'unit_volume',
@@ -102,3 +155,34 @@ class  ItemSearchForm(forms.Form):
     item_name = forms.CharField(label = 'Item Name',required = False)
     item_barcode = forms.CharField(label = 'Item Barcode',required=False)
     item_description = forms.CharField(label = 'Item Description',max_length=30,required=False)
+
+class  ItemLocationAssignmentForm(forms.Form):
+    """
+    ItemSearchForm
+    """
+    def __init__(self,    *args,    **kwargs):
+        super(ItemLocationAssignmentForm,    self).__init__(*args,    **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+        self.helper.form_id = 'id_asign_locan_form'
+        self.helper.form_method = 'POST'
+        self.helper.form_action = ''
+        self.helper.label_class = 'col-lg-2'
+        self.helper.field_class = 'col-lg-4'
+        self.helper.layout = Layout(
+                        Fieldset( 'Item Location Assignment',
+                          'sku_id',
+                          'dsp_location',
+                          ),
+                        #Submit('submit',    'Submit',    css_class='btn    btn-default'),
+                        Div(Submit('submit',    'Assign',    css_class='btn    btn-default'),css_class='col-lg-offset-3    col-lg-9',),
+                    )
+
+    #sku_id = forms.IntegerField(label = 'Sku Id',required = True)
+    #dsp_location = forms.CharField(label = 'dsp Location',required=True)
+    #locns = LocationMaster.objects.all()
+    #items = ItemMaster.objects.all()
+    sku_id = forms.ModelChoiceField(label = 'Sku Id', queryset=ItemMaster.objects.all())
+    dsp_location = forms.ModelChoiceField(label = 'dsp Location',queryset=ItemMaster.objects.all())
+
+
