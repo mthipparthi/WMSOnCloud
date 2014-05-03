@@ -10,6 +10,7 @@ admin.autodiscover()
 import storemaster.urls
 import usermaster.urls
 import item.urls
+import location.urls
 
 urlpatterns    =    patterns('',
     url(r'^$',    TemplateView.as_view(template_name='index.html')),
@@ -19,6 +20,7 @@ urlpatterns    =    patterns('',
     url(r'^storemaster/',    include(storemaster.urls)),
     url(r'^usermaster/',    include(usermaster.urls)),
     url(r'^item/',    include(item.urls)),
+    url(r'^location/',    include(location.urls)),
 )
 # Uncomment the next line to serve media files in dev.
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
