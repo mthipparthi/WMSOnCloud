@@ -199,6 +199,8 @@ DJANGO_APPS    =    (
     'inventory',
     'location',
     'gunicorn',
+    'storemaster',
+    'inbound',
 	
 )
 

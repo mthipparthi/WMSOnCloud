@@ -1,0 +1,43 @@
+{% extends "admin\base.html" %}
+
+{% block content %}
+
+<h1>Add Purchase Order Detail</h1>
+<br>
+<br>
+
+  <table style="width:1000px">
+  <tr>
+    <th>PO Number</th>
+    <th>Supplier ID</th>
+    <th>Status Code</th>
+	<th>Create Date Time</th>
+  </tr>
+  <tr>
+    <td>{{ po.purchase_order_number }}</td>
+    <td>{{ po.supplier_id }}</td>
+	<td>{{ po.status_code }}</td>
+	<td>{{ po.create_dateTime }}</td>
+  </tr>
+  </table>
+
+  <form name="CreatePODtl" action="/inbound/createPoDtl" method="post">
+  {% csrf_token %}
+   <input type="hidden" name="ponbr" value={{ po.purchase_order_number }}>
+   <label>Display SKU:</label>
+   <select name="displaySkuList">
+     {% for item in items %}
+      <option value={{ item.sku_id }}>{{ item.dsp_sku }}</option>
+	 {% endfor %}
+    </select>
+	<input type="text" name="dsp_sku">
+	<br>
+	<label>Ordered Qty:</label>
+	<input type="text" name="orderQty">
+    <input id="save_podtl" type="submit" value="Save" />
+</form>
+
+<br>
+<br>
+
+{% endblock %}

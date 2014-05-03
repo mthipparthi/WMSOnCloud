@@ -1,0 +1,24 @@
+{% extends "admin\base.html" %}
+{% block content %}
+
+<h1>Purchase Order List</h1>
+ 
+ <br>
+  <table style="width:1000px">
+  <tr>
+    <th>Display SKU</th>
+    <th>Ordered Qty</th>
+	<th>Create Date Time</th>
+  </tr>
+  {% for podtl in object_list %}
+  <tr>
+	<td>{{ podtl.dsp_sku }}</td>
+	<td>{{ podtl.ordered_qty }}</td>
+	<td>{{ podtl.create_dateTime }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+</ul>
+
+{% endblock %}
+

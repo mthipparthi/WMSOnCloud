@@ -24,6 +24,7 @@ from usermaster.forms import UserSearchForm
 from braces.views import JSONResponseMixin
 from django.core import serializers
 
+
 from crispy_forms.utils import render_crispy_form
 
 class AjaxableResponseRowMixin(object):
@@ -144,6 +145,7 @@ class  UserCreationView(AjaxableResponseRowMixin,CreateView):
     form_class = UserCreationForm
     template_name = 'usermaster/user_create_form.html'
 
+
 def UserCreationFunc(request):
     print "UserCreationFunc"
     if request.method == 'POST':
@@ -153,7 +155,9 @@ def UserCreationFunc(request):
             form.save()
             return {'success': True}
         else:
-            return {'success': False}
+            return {'success': True}
+            #form_error = render_crispy_form(form)
+            #return {'success': False, 'form_error': form_error}
     else:
         form = UserCreationForm(None)
         return render(request,'usermaster/user_create_form.html',{'form':form,})

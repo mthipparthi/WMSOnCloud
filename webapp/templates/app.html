@@ -13,55 +13,15 @@
 
   $(document).ready(function(event){
 
-    $( "#create_user_id" ).click(function( event ) {
+	      $( ".myclick" ).click(function( event ) {
             event.preventDefault();
              $('#resultarea').empty()
             var url = $(this).attr("href");
             $("#workarea").load($(this).attr("href"));
 
-      });
+           });
 
-    $( "#search_user_id" ).click(function( event ) {
-      event.preventDefault();
-       $('#resultarea').empty()
-      var url = $(this).attr("href");
-      $("#workarea").load($(this).attr("href"));
-
-      });
-
-    $( "#id_create_item" ).click(function( event ) {
-      event.preventDefault();
-       $('#resultarea').empty()
-      var url = $(this).attr("href");
-      $("#workarea").load($(this).attr("href"));
-
-      });
-
-    $( "#id_search_items" ).click(function( event ) {
-      event.preventDefault();
-      $('#resultarea').empty()
-      var url = $(this).attr("href");
-      $("#workarea").load($(this).attr("href"));
-
-      });
-
-    $( "#id_create_locn" ).click(function( event ) {
-
-      event.preventDefault();
-      $('#resultarea').empty()
-      var url = $(this).attr("href");
-      $("#workarea").load($(this).attr("href"));
-
-      });
-
-    $( "#id_search_locn" ).click(function( event ) {
-      event.preventDefault();
-      $('#resultarea').empty()
-      var url = $(this).attr("href");
-      $("#workarea").load($(this).attr("href"));
-
-      });
-
+   
    });
   </script>
 
@@ -95,25 +55,31 @@
                             <table    class="table">
                                 <tr>
                                     <td>
-                                        <a  href="/item/add/"    id="id_create_item"    >Create Item</a>
+                                        <a  href="/item/add/"    id="id_create_item" class ="myclick"   >Create Item</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a  href="/item/search/"  id="id_search_items"    >Search Items</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <a  href="/location/add/"  id="id_create_locn"    >Create Location</a>
+                                        <a  href="/item/search/"  id="id_search_items" class ="myclick"   >Search Items</a>
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td>
-                                        <a  href="/location/search/"  id="id_search_locn"  >Search Location</a>
+                                        <a  href="/location/add/"  id="id_create_locn"  class ="myclick"  >Create Location</a>
                                     </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <a  href="/location/search/"  id="id_search_locn" class ="myclick" >Search Location</a>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                <td>
+                                        <a  href="/inventory/assignLocation/"  id="id_assignLocation"  class ="myclick"  >Assign Location</a>
+                                 </td>
                                 </tr>
 
                             </table>
@@ -132,24 +98,93 @@
                             <table    class="table">
                                 <tr>
                                     <td>
-                                        <a    href="">Orders</a>
+                                        <a    href="/inventory/search/" id="inventory_search_id" class ="myclick" >Inventory Search</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a    href="">Invoices</a>
+                                        <a    href="/inventory/" id="inventory_list_id" class ="myclick">Inventory List</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a    href="">Shipments</a>
+                                        <a    href="/inbound/suppliers" id="suppliers_list_id" class ="myclick">Supplier List</a>
                                     </td>
                                 </tr>
-                                <tr>
+                               <tr>
                                     <td>
-                                        <a    href="">Tex</a>
+                                        <a    href="/inbound/addSupplier" id="create_supplier_id" class ="myclick" >Create Supplier </a>
                                     </td>
                                 </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/pos" id="po_list_id" class ="myclick">PO List</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/createPO" id="create_po_id" class ="myclick">Create PO</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/podtls" id="po_dtls_list_id" class ="myclick">PO Details List</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/addPoDtl" id="add_po_detail_id" class ="myclick">Add PO Dtl</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/createPoDtl" id="create_po_detail_id" class ="myclick">Create PO Detail</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/ListPoWithDtls" id="list_po_hdr_dtl_list_id" class ="myclick">PO Header - Detail List</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/ListPurchaseOrder" id="ListPurchaseOrder_id" class ="myclick" >List Purchase order</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/addInboundShipment" id="addInboundShipment_id" class ="myclick">Add Shipment</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/createInboundShipment" id="createInboundShipment$_id" class ="myclick">Create Shipment</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/listInboundShipment" id="listInboundShipment_id" class ="myclick">Shipment List</a>
+                                    </td>
+                                </tr>
+								<tr>
+                                    <td>
+                                        <a    href="/inbound/listInbdShipmentWithDtls/" id="listInbdShipmentWithDtls_id" class ="myclick">List Shipment Hdr,Details</a>
+                                    </td>
+                                </tr>
+
+																<tr>
+                                    <td>
+                                        <a    href="/inbound/receiveInbdShipmentItems/" id="receiveInbdShipmentItems_id" class ="myclick">Receive Inbound Shipment</a>
+                                    </td>
+                                </tr>
+
+																<tr>
+                                    <td>
+                                        <a    href="/inbound/receiveShipment/" id="receiveShipment_id" class ="myclick">Receive  Shipment</a>
+                                    </td>
+                                </tr>
+
+
                             </table>
                         </div>
                     </div>
@@ -240,14 +275,24 @@
                                 <tr>
                                     <td>
 
-                              <a    href="/usermaster/createuser/"    id="create_user_id"    >Create User</a>
+                              <a    href="/usermaster/createuser/"    id="create_user_id"  class ="myclick"  >Create User</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                      <a  href="/usermaster/searchusers/"  id="search_user_id"    >Search User</a>
+                                      <a  href="/usermaster/searchusers/"  id="search_user_id" class ="myclick"   >Search User</a>
                                     </td>
                                 </tr>
+
+                                 <tr>
+                                    <td>
+                                      <a  href="/storemaster/add/"  id="create_store_id"  class ="myclick"  >Add Store</a>
+                                    </td>
+                                </tr>
+
+
+
+
 
                             </table>
                         </div>

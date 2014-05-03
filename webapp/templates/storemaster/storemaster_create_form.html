@@ -1,4 +1,63 @@
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Create" />
+{%    load    crispy_forms_tags    %}
+{%    block    content    %}
+<!--    <form    action=""    method="POST">{%    csrf_token    %}
+    {{form    |    crispy    }}
+    <input    type="submit"    value="Create"    />
+</form>    -->
+
+
+<form   class="form-horizontal" id="id_store_master_create_form" name="id_store_master_create_form" action="/storemaster/add/"    method="POST">{%    csrf_token    %}
+    {%    crispy    form    %}
 </form>
+
+<script type="text/javascript">
+
+$("#id_store_master_create_form").submit(function(event) {
+
+    /* stop form from submitting normally */
+    event.preventDefault();
+
+    /* get some values from elements on the page: */
+    var $form = $( this ),
+    url = $form.attr( 'action' );
+
+
+    /* Send the data using post */
+    var posting = $.post( url, { store_id: $('#id_store_id').val(), store_name: $('#id_store_name').val(),
+         oraganisation_id: $('#id_oraganisation_id').val(),address_1: $('#id_address_1').val(), address_2: $('#id_address_2').val(),
+         suburb: $('#id_suburb').val(),state: $('#id_state').val(),country: $('#id_country').val(),
+         post_code: $('#id_post_code').val(),phone_nbr: $('#id_phone_nbr').val(),dsitribution_centre_flag: $('#id_dsitribution_centre_flag').val(),
+         rcv_without_shipment: $('#id_rcv_without_shipment').val(), locations_exist: $('#id_locations_exist').val(), local_currency: $('#id_local_currency').val(),
+         display_local_currency: $('#id_display_local_currency').val(), create_user_id: $('#id_create_user_id').val(), receive_with_lpn: $('#id_receive_with_lpn').val(),
+        putaway_tasks_needed: $('#id_putaway_tasks_needed').val(), picking_tasks_enabled: $('#id_picking_tasks_enabled').val(), store_order_allocation_enabled: $('#id_store_order_allocation_enabled').val(),
+        cash_sale_return_period: $('#id_cash_sale_return_period').val(), credit_sale_return_period: $('#id_credit_sale_return_period').val(),
+        'csrfmiddlewaretoken': '{{ csrf_token }}'} );
+
+    /* Put the results in a div */
+    posting.done(function( data ) {
+
+           $.each(data, function(index, element) {
+                url="/storemaster/"+element+"/";
+                $("#workarea").load(url);
+                /*$.getJSON(url,function(result){
+                    alert( "Success: " + url );
+                    $.each(result, function(i, field){
+                        $("#resultarea").append(i + "" + field + " ");
+                    });
+                }); */
+
+           });
+
+    });
+
+     /* Error Handling */
+     posting.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+     });
+ });
+
+
+</script>
+
+{%    endblock    %}
+

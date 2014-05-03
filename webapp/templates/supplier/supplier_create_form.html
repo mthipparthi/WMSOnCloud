@@ -1,0 +1,54 @@
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- <form action="" method="POST">{% csrf_token %}
+{{form | crispy }}
+<input type="submit" value="Create" />
+</form> -->
+
+
+<form class="form-horizontal" id="id_create_supplier_form" name="id_create_supplier_form" action="/inbound/addSupplier/" method="POST">{% csrf_token %}
+    {% crispy form %}
+</form>
+
+<script type="text/javascript">
+
+$("#id_create_supplier_form").submit(function(event) {
+
+    /* stop form from submitting normally */
+    event.preventDefault();
+
+    /* get some values from elements on the page: */
+    var $form = $( this ),
+    url = $form.attr( 'action' );
+
+    /* Send the data using post */
+    var posting = $.post( url, { organisation_id: $('#id_organisation_id').val(), name: $('#id_name').val(),address_1: $('#id_address_1').val(), address_2: $('#id_address_2').val(), city: $('#id_city').val(), country: $('#id_country').val(), post_code: $('#id_post_code').val(), phone_number: $('#id_phone_number).val(), 'csrfmiddlewaretoken': '{{ csrf_token }}'} );
+
+    /* Put the results in a div */
+    posting.done(function( data ) {
+
+           $.each(data, function(index, element) {
+                url="/location/"+element+"/";
+                $("#workarea").load(url);
+                /*$.getJSON(url,function(result){
+alert( "Success: " + url );
+$.each(result, function(i, field){
+$("#resultarea").append(i + "" + field + " ");
+});
+}); */
+
+           });
+
+    });
+
+     /* Error Handling */
+     posting.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+     });
+ });
+
+
+</script>
+
+
+{% endblock %}

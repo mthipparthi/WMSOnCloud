@@ -1,0 +1,60 @@
+{% load crispy_forms_tags %}
+{% block content %}
+<!-- <form action="" method="POST">{% csrf_token %}
+{{form | crispy }}
+<input type="submit" value="Create" />
+</form> -->
+
+
+<form id="id_supplier_list_form" name="id_supplier_list_form" action="/inbound/suppliers/" method="POST">{% csrf_token %}
+    {% crispy form %}
+</form>
+
+<script type="text/javascript">
+
+$("#id_supplier_list_form").submit(function(event){
+
+    /* stop form from submitting normally */
+    event.preventDefault();
+
+    /* get some values from elements on the page: */
+    var $form = $( this ),
+    url = $form.attr( 'action' );
+
+    var posting = $.post( url, 'csrfmiddlewaretoken': {{ csrf_token }} } );
+
+    var options= '<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">\
+<ul class="nav navbar-nav">\
+</ul>\
+</div>'
+
+    var tth= '<table class="table table-condensed table-hover"> <thead> <tr> <th>Supplier Name</th> <th>Address</th> <th>City</th> <th>Country</th> <th>Post Code</th> </tr> </thead>'
+    var tbd= '<tbody id="tbody">'
+    var tcl='</tbody> </table>'
+    posting.done(function( data ) {
+        $.each(data, function(index, element) {
+                var eachrow = "<tr>"
+                 + "<td>" + element.fields.name + "</td>"
+                 + "<td>" + element.fields.address_1 + "</td>"
+                 + "<td>" + element.fields.city + "</td>"
+                 + "<td>" + element.fields.country + "</td>"
+                 + "<td>" + element.fields.post_code + "</td>"
+                 + "</tr>";
+                tbd = tbd + eachrow;
+        });
+
+        var tableData= options+tth+tbd+tcl+abc;
+        $('#resultarea').html(tableData);
+    });
+
+     /* Error Handling */
+     posting.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+     });
+
+});
+</script>
+
+
+{% endblock %}
+
