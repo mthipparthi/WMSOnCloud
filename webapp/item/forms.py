@@ -183,6 +183,6 @@ class  ItemLocationAssignmentForm(forms.Form):
     #locns = LocationMaster.objects.all()
     #items = ItemMaster.objects.all()
     sku_id = forms.ModelChoiceField(label = 'Sku Id', queryset=ItemMaster.objects.all())
-    dsp_location = forms.ModelChoiceField(label = 'dsp Location',queryset=ItemMaster.objects.all())
+    dsp_location = forms.ModelChoiceField(label = 'dsp Location',queryset=LocationMaster.objects.all())
 
 

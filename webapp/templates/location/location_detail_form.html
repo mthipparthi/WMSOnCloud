@@ -1,0 +1,14 @@
+{% load crispy_forms_tags    %}
+{% block content %}
+
+<h3>Location Details</h3>
+
+<fieldset>
+    <legend>Location Details</legend>
+    Location Id  : <p> {{ object.location_id}}</p>
+    organisation Id  : <p>{{ object.organisation_id }}</p>
+    store Id  : <p>{{ object.store_id }}</p>
+
+</fieldset>
+
+{%endblock%}

@@ -133,7 +133,7 @@ class    UserCreationForm(forms.ModelForm):
 
 class    UserUpdateForm(forms.ModelForm):
     """
-    UserCreationForm
+    UserUpdateForm
     """
     class Meta:
         model = UserMaster
@@ -171,7 +171,7 @@ class    UserSearchForm(forms.Form):
 
 class    UserDetailForm(forms.ModelForm):
     """
-       UserCreationForm
+       UserDetailForm
     """
     def    __init__(self,    *args,    **kwargs):
         super(UserDetailForm,    self).__init__(*args,    **kwargs)

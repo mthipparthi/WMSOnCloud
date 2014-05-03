@@ -45,6 +45,23 @@
 
       });
 
+    $( "#id_create_locn" ).click(function( event ) {
+
+      event.preventDefault();
+      $('#resultarea').empty()
+      var url = $(this).attr("href");
+      $("#workarea").load($(this).attr("href"));
+
+      });
+
+    $( "#id_search_locn" ).click(function( event ) {
+      event.preventDefault();
+      $('#resultarea').empty()
+      var url = $(this).attr("href");
+      $("#workarea").load($(this).attr("href"));
+
+      });
+
    });
   </script>
 
@@ -89,15 +106,16 @@
 
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-file    text-info"></span><a    href="http://www.jquery2dotnet.com">Newsletters</a>
+                                        <a  href="/location/add/"  id="id_create_locn"    >Create Location</a>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-comment    text-success"></span><a    href="http://www.jquery2dotnet.com">Comments</a>
-                                        <span    class="badge">42</span>
+                                        <a  href="/location/search/"  id="id_search_locn"  >Search Location</a>
                                     </td>
                                 </tr>
+
                             </table>
                         </div>
                     </div>
@@ -114,22 +132,22 @@
                             <table    class="table">
                                 <tr>
                                     <td>
-                                        <a    href="http://www.jquery2dotnet.com">Orders</a>
+                                        <a    href="">Orders</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a    href="http://www.jquery2dotnet.com">Invoices</a>
+                                        <a    href="">Invoices</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a    href="http://www.jquery2dotnet.com">Shipments</a>
+                                        <a    href="">Shipments</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a    href="http://www.jquery2dotnet.com">Tex</a>
+                                        <a    href="">Tex</a>
                                     </td>
                                 </tr>
                             </table>
@@ -149,23 +167,22 @@
                             <table    class="table">
                                 <tr>
                                     <td>
-                                        <a    href="http://www.jquery2dotnet.com">Change    Password</a>
+                                        <a    href="">Change    Password</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a    href="http://www.jquery2dotnet.com">Notifications</a>    <span    class="label    label-info">5</span>
+                                        <a    href="">Notifications</a>    <span    class="label    label-info">5</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a    href="http://www.jquery2dotnet.com">Import/Export</a>
+                                        <a    href="">Import/Export</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-trash    text-danger"></span><a    href="http://www.jquery2dotnet.com"    class="text-danger">
-                                            Delete    Account</a>
+                                        <a    href="" > Delete    Account</a>
                                     </td>
                                 </tr>
                             </table>
@@ -185,22 +202,22 @@
                             <table    class="table">
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-usd"></span><a    href="http://www.jquery2dotnet.com">Sales</a>
+                                        <a    href="">Sales</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-user"></span><a    href="http://www.jquery2dotnet.com">Customers</a>
+                                        <a    href="">Customers</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-tasks"></span><a    href="http://www.jquery2dotnet.com">Products</a>
+                                        <a    href="">Products</a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-shopping-cart"></span><a    href="http://www.jquery2dotnet.com">Shopping    Cart</a>
+                                        <a    href="">Shopping    Cart</a>
                                     </td>
                                 </tr>
                             </table>
@@ -222,9 +239,6 @@
                             <table    class="table">
                                 <tr>
                                     <td>
-                                        <span    class="glyphicon    glyphicon-usd"></span>
-                             <!--      <input type="submit" id="create_user_id" value="Generate!"> -->
-
 
                               <a    href="/usermaster/createuser/"    id="create_user_id"    >Create User</a>
                                     </td>
@@ -234,16 +248,7 @@
                                       <a  href="/usermaster/searchusers/"  id="search_user_id"    >Search User</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <span    class="glyphicon    glyphicon-tasks"></span><a    href="http://www.jquery2dotnet.com">C</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span    class="glyphicon    glyphicon-shopping-cart"></span><a    href="http://www.jquery2dotnet.com">D    Cart</a>
-                                    </td>
-                                </tr>
+
                             </table>
                         </div>
                     </div>
@@ -257,16 +262,9 @@
 
     </div>
 
-            <div    class="col-md-10"    id="workarea"    >
-
-
-
-            </div>
-            <div    class="col-md-10"    id="resultarea"    >
-
-
-
-            </div>
+            <div    class="col-md-10"    id="workarea"> </div>
+            <div    class="col-md-10  empty"> </div>
+            <div    class="col-md-10"    id="resultarea"></div>
         </div>
 
 

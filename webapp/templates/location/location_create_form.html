@@ -6,13 +6,13 @@
 </form>    -->
 
 
-<form   class="form-horizontal" id="id_create_item_form" name="id_create_item_form" action="/item/add/"    method="POST">{%    csrf_token    %}
+<form   class="form-horizontal" id="id_create_locn_form" name="id_create_locn_form" action="/location/add/"    method="POST">{%    csrf_token    %}
     {%    crispy    form    %}
 </form>
 
 <script type="text/javascript">
 
-$("#id_create_item_form").submit(function(event) {
+$("#id_create_locn_form").submit(function(event) {
 
     /* stop form from submitting normally */
     event.preventDefault();
@@ -23,18 +23,17 @@ $("#id_create_item_form").submit(function(event) {
 
 
     /* Send the data using post */
-    var posting = $.post( url, { item_name: $('#id_item_name').val(), item_barcode: $('#id_item_barcode').val(),
-         item_description: $('#id_item_description').val(),style: $('#id_style').val(), size: $('#id_size').val(),
-         country_of_origin: $('#id_country_of_origin').val(),unit_price: $('#id_unit_price').val(),retail_price: $('#id_retail_price').val(),
-         wholesale_price: $('#id_wholesale_price').val(),declaration_cost: $('#id_declaration_cost').val(),unit_weight: $('#id_unit_weight').val(),
-         unit_height: $('#id_unit_height').val(), unit_volume: $('#id_unit_volume').val(), item_category: $('#id_item_category').val(),
+    var posting = $.post( url, { organisation_id: $('#id_organisation_id').val(), store_id: $('#id_store_id').val(),
+         area: $('#id_area').val(),zone: $('#id_zone').val(), aisle: $('#id_aisle').val(),
+         bay: $('#id_bay').val(),level: $('#id_level').val(),sequence: $('#id_sequence').val(),
+         max_volume: $('#id_max_volume').val(),max_weight: $('#id_max_weight').val(),max_height: $('#id_max_height').val(),max_number_of_items: $('#id_max_number_of_items').val(),
           'csrfmiddlewaretoken': '{{ csrf_token }}'} );
 
     /* Put the results in a div */
     posting.done(function( data ) {
 
            $.each(data, function(index, element) {
-                url="/item/"+element+"/";
+                url="/location/"+element+"/";
                 $("#workarea").load(url);
                 /*$.getJSON(url,function(result){
                     alert( "Success: " + url );
@@ -55,6 +54,7 @@ $("#id_create_item_form").submit(function(event) {
 
 
 </script>
+
 
 {%    endblock    %}
 

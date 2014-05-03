@@ -1,9 +1,15 @@
-
+{% load crispy_forms_tags    %}
 {% block content %}
 
-<h1> {{itemmaster}} </h1>
+<h3>Item Details</h3>
 
-<p>Item Name: {{ itemmaster.item_name }}</p>
-<a href="{% url "item-edit" pk=itemmaster.sku_id %}">Edit</a>
+<fieldset>
+    <legend>Item Details</legend>
+
+    Display Sku: <p> {{ object.dsp_sku}}</p>
+    Item Barcode  : <p> {{ object.item_barcode}}</p>
+    organisation Id  : <p>{{ object.organisation_id }}</p>
+
+</fieldset>
 
 {%endblock%}

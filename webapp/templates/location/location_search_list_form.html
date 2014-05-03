@@ -6,13 +6,13 @@
 </form>    -->
 
 
-<form  id="id_UserSearchForm" name="id_UserSearchForm" action="/usermaster/searchusers/"    method="POST">{%    csrf_token    %}
+<form  id="id_location_search_form" name="id_location_search_form" action="/location/search/"    method="POST">{%    csrf_token    %}
     {%    crispy    form    %}
 </form>
 
 <script type="text/javascript">
 
-$("#id_UserSearchForm").submit(function(event) {
+$("#id_location_search_form").submit(function(event){
 
     /* stop form from submitting normally  */
     event.preventDefault();
@@ -21,22 +21,21 @@ $("#id_UserSearchForm").submit(function(event) {
     var $form = $( this ),
     url = $form.attr( 'action' );
 
-    var posting = $.post( url, { email: $('#id_email').val(), first_name: $('#id_first_name').val(), last_name: $('#id_last_name').val(),
-                  enterprise_id: $('#id_enterprise_id').val(),store_id: $('#id_store_id').val(),'csrfmiddlewaretoken': '{{ csrf_token }}'} );
+    var posting = $.post( url, { organisation_id: $('#id_organisation_id').val(),
+                                 store_id: $('#id_store_id').val(),
+                                 'csrfmiddlewaretoken': '{{ csrf_token }}' } );
 
-
-    var tth='<table class="table table-condensed table-hover"> <thead> <tr> <th>Email </th> <th>First Name</th> <th>Last Name</th> <th>Active</th> <th>Store ID</th> <th>Enterprise ID</th> </tr> </thead>'
+    var tth= '<table class="table table-condensed table-hover"> <thead> <tr> <th>Select</th> <th> ID </th> <th>Display location</th> <th>Org Id</th> <th>Store Id</th> </tr> </thead>'
     var tbd= '<tbody id="tbody">'
     var tcl='</tbody> </table>'
     posting.done(function( data ) {
         $.each(data, function(index, element) {
                 var eachrow = "<tr>"
-                 + "<td>" + element.fields.email + "</td>"
-                 + "<td>" + element.fields.first_name + "</td>"
-                 + "<td>" + element.fields.last_name + "</td>"
-                 + "<td>" + element.fields.is_active + "</td>"
+                 + "<td>" + "<input type=" +"checkbox" + ">"+" </td>"
+                 + "<td>" + element.pk + "</td>"
+                 + "<td>" + element.fields.dsp_location + "</td>"
+                 + "<td>" + element.fields.organisation_id + "</td>"
                  + "<td>" + element.fields.store_id + "</td>"
-                 + "<td>" + element.fields.enterprise_id + "</td>"
                  + "</tr>";
                 tbd = tbd + eachrow;
         });
@@ -50,7 +49,11 @@ $("#id_UserSearchForm").submit(function(event) {
             alert( "Request failed: " + textStatus );
      });
 
- });
+
+
+});
 </script>
 
-{%  endblock    %}
+
+{% endblock %}
+

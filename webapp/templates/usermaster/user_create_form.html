@@ -31,6 +31,7 @@ $("#id_user_creation_form").submit(function(event) {
     /* Put the results in a div */
     posting.done(function( data ) {
            $.each(data, function(index, element) {
+
                 url="/usermaster/user/"+element+"/";
                 $("#workarea").load(url);
                 /*$.getJSON(url,function(result){
