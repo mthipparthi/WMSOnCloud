@@ -1,0 +1,28 @@
+{% extends "admin\base.html" %}
+{% block content %}
+
+<h1>Supplier List</h1>
+  
+  <table style="width:1000px">
+  <tr>
+    <th>Supplier Name</th>
+    <th>City</th>
+    <th>Country</th>
+	<th>Create Date Time</th>
+  </tr>
+  {% for supplier in object_list %}
+  <tr>
+    <td><a href="{% url "supplier-edit" pk=supplier.supplier_id %}">{{ supplier }}</td>
+    <td>{{ supplier.city }}</td>
+	<td>{{ supplier.country }}</td>
+	<td>{{ supplier.create_dateTime }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+</ul>
+
+<br>
+<br>
+<a href="{% url "supplier-new" %}">Add Supplier</a>
+{% endblock %}
+

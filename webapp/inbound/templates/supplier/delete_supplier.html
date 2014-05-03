@@ -1,0 +1,17 @@
+{% extends "admin\base.html" %}
+
+{% block content %}
+
+<h1>Delete Supplier</h1>
+
+<p>Are you sure you want to delete the Supplier {{ supplier }}?</p>
+
+<form action="{% url "supplier-remove" pk=supplier.supplier_id %}" method="POST">
+  {% csrf_token %}
+  
+  <input type="submit" value="Yes, delete." />
+  <a href="{% url "supplier-list" %}">No, cancel.</a>
+ 
+</form>
+
+{% endblock %}

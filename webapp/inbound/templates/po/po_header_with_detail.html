@@ -1,0 +1,51 @@
+{% extends "admin\base.html" %}
+
+{% block content %}
+
+<h1>Purchase Order</h1>
+<br>
+  <table style="width:1000px">
+  <tr>
+    <th>PO Number</th>
+    <th>Supplier ID</th>
+    <th>Status Code</th>
+	<th>Create Date Time</th>
+  </tr>
+  <tr>
+    <td><a href="{% url "po-edit" pk=po.purchase_order_number %}">{{ po.purchase_order_number }}</a></td>
+    <td>{{ po.supplier_id }}</td>
+	<td>{{ po.status_code }}</td>
+	<td>{{ po.create_dateTime }}</td>
+  </tr>
+  </table>
+  
+  <br>
+  
+<br>
+<h1>Purchase Order  Details</h1>  
+<br>
+  <table style="width:1000px">
+  <tr>
+    <th>Display SKU</th>
+    <th>Ordered Qty</th>
+	<th>Create Date Time</th>
+  </tr>
+  {% for podtl in poDtls %}
+  <tr>
+    <td>{{ podtl.dsp_sku }}</td>
+    <td>{{ podtl.ordered_qty }}</td>
+	<td>{{ podtl.create_dateTime }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+  
+  <br>
+  
+  <form action="/inbound/addPoDtl" method="post" >
+    {% csrf_token %}
+    <input type="hidden" name="ponbr" value={{ po.purchase_order_number }}>
+    <input type="submit" value="Add PO Dtl">
+  </form>
+
+ 
+{% endblock %}

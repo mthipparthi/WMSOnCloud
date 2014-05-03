@@ -1,0 +1,59 @@
+	<td>
+	  <form action="/inbound/assignLocnSearch/" method="post" >
+        {% csrf_token %}
+        <input type="hidden" name="shpmnt_nbr" value={{ shipment.inbd_shipment_number }}>
+        <input type="submit" value="Receive Shipment">
+       </form>
+	</td>
+  
+  
+  		<td>
+			#<form action="/inbound/receiveShipment/" method="post" >
+				{% csrf_token %}
+				<input type="hidden" name="shpmnt_nbr" value={{ shipment.inbd_shipment_number }}>
+				<input type="submit" value="Receive Shipment">
+			</form>
+		</td>
+		
+		
+def addInboundShipment(request):
+    error = False
+    pos = PurchaseOrder.objects.all()
+    return render(request, 'inbdshpmt/add_shpmt.html', {'pos': pos})
+
+	
+	# Receiving Functionality
+#def receiveShipment(request):
+#    error = False
+#    if('shpmnt_nbr' in request.POST and request.POST['shpmnt_nbr'] != ""):
+#        inbd_shpmt_nbr = request.POST['shpmnt_nbr']
+#        inbd_shpmt = InboundShipment.objects.get(inbd_shipment_number=inbd_shpmt_nbr)
+        #inbd_shpmt_dtls = InboundShipmentDtl.objects.raw('SELECT * from inbound_inboundshipmentdtl WHERE inbd_shipment_nbr = %s', [inbd_shpmt_nbr])
+#        return render(request, 'inbdshpmt/recv_shpmt.html', {'shipment': inbd_shpmt})
+#    else:
+#        inbd_shpmt = InboundShipment.objects.get(inbd_shipment_nbr=inbd_shpmt_nbr)
+#        #inbd_shpmt_dtls = InboundShipmentDtl.objects.raw('SELECT * from inbound_inboundshipmentdtl WHERE inbd_shipment_nbr = %s', [inbd_shpmt_nbr])
+#        return render(request, 'inbdshpmt/recv_shpmt.html', {'shipment': inbd_shpmt})
+          
+
+
+def createInboundShipment(request):
+    error = False
+    if('ponbr' in request.POST and request.POST['ponbr'] != ""):
+        poNbr = request.POST['ponbr']
+        po = PurchaseOrder.objects.get(purchase_order_number=poNbr)
+        # create the inbound shipment object
+        shipment = InboundShipment(organisation_id=po.organisation_id, store_id=po.store_id, purchase_order_number=po.purchase_order_number, status_code='CR')
+        shipment.save()
+        # create the inbound shipment details from po dtls
+        poDtls = PurchaseOrderDtl.objects.raw('SELECT * FROM inbound_purchaseorderdtl WHERE purchase_order_number = %s', [poNbr])
+        for poDtl in poDtls:
+            shipmentDtl = InboundShipmentDtl(organisation_id=po.organisation_id, inbd_shipment_number=shipment.inbd_shipment_number, sku_id=poDtl.sku_id, dsp_sku=poDtl.dsp_sku, ordered_qty=poDtl.ordered_qty)
+            shipmentDtl.save()
+        # return both shipment and shipment details
+        shipmentDtls = InboundShipmentDtl.objects.raw('SELECT * FROM inbound_inboundshipmentdtl WHERE inbd_shipment_number = %s', [shipment.inbd_shipment_number])
+        return render(request, 'inbdshpmt/view_shpmt.html', {'shipment': shipment})
+    else:
+        pos = PurchaseOrder.objects.all()
+        return render(request, 'inbdshpmt/add_shpmt.html', {'pos': pos})
+		

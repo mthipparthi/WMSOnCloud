@@ -1,0 +1,25 @@
+{% extends "admin\base.html" %}
+
+{% block content %}
+
+<h1>Create Inbound Shipment</h1>
+<br>
+<br>
+
+  <form name="CreateInbdShpmt" action="/inbound/createInboundShipment" method="post">
+  {% csrf_token %}
+   <label>Select PO:</label>
+   <br>
+   <select name="polist">
+     {% for po in pos %}
+      <option value={{ po.purchase_order_number }}>{{ po.purchase_order_number }}</option>
+	 {% endfor %}
+    </select>
+	<input type="text" name="ponbr">
+	<br>
+    <input id="add_shpmt" type="submit" value="Create Shipment" />
+</form>
+
+
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "admin\base.html" %}
+{% block content %}
+
+<h1>Purchase Order List</h1>
+ 
+ <br>
+  <table style="width:1000px">
+  <tr>
+    <th>PO Number</th>
+    <th>Supplier Name</th>
+    <th>Status Code</th>
+	<th>Create Date Time</th>
+  </tr>
+
+  {% for po in object_list %}
+  <tr>
+    <td>
+    <form action="/inbound/ListPoWithDtls" method="post">
+		{% csrf_token %}
+		<input type="hidden" name="ponbr" value={{ po.purchase_order_number }}>
+		<a href=""  onclick="document.forms[1].submit();return false;">{{ po }} </a>
+	</form>
+	</td>
+	<td>{{ po.supplier_id }}</td>
+	<td>{{ po.status_code }}</td>
+	<td>{{ po.create_dateTime }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+</ul>
+
+{% endblock %}
+

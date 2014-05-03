@@ -1,0 +1,53 @@
+{% extends "admin\base.html" %}
+
+{% block content %}
+
+<h1>Inbound Shipment Header</h1>
+<br>
+  <table style="width:1000px">
+  <tr>
+    <th>Shipment Number</th>
+	<th>PO Number</th>
+    <th>Status Code</th>
+	<th>Create Date Time</th>
+  </tr>
+  <tr>
+    <td>{{ shipment.inbd_shipment_number }}</a></td>
+    <td>{{ shipment.purchase_order_number }}</a></td>
+	<td>{{ shipment.status_code }}</td>
+	<td>{{ shipment.create_dateTime }}</td>
+	<td>
+	  <form action="/inbound//" method="post" >
+        {% csrf_token %}
+        <input type="hidden" name="shpmnt_nbr" value={{ shipment.inbd_shipment_number }}>
+        <input type="submit" value="Receive Shipment">
+       </form>
+	</td>
+  </tr>
+  </table>
+  
+  <br>
+
+<br>
+<h1>Inbound Shipment  Details</h1>  
+<br>
+  <table style="width:1000px">
+  <tr>
+    <th>Display SKU</th>
+    <th>Ordered Qty</th>
+	<th>Received Qt</th>
+	<th>Create Date Time</th>
+  </tr>
+  {% for shipmentDtl in shipmentDtls %}
+  <tr>
+    <td>{{ shipmentDtl.dsp_sku }}</td>
+    <td>{{ shipmentDtl.ordered_qty }}</td>
+	<td>{{ shipmentDtl.received_qty }}</td>
+	<td>{{ shipmentDtl.create_dateTime }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+  
+  <br>
+  
+{% endblock %}

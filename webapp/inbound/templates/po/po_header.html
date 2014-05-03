@@ -1,0 +1,31 @@
+{% extends "admin\base.html" %}
+
+{% block content %}
+
+<h1>Purchase Order</h1>
+<br>
+  <table style="width:1000px">
+  <tr>
+    <th>PO Number</th>
+    <th>Supplier ID</th>
+    <th>Status Code</th>
+	<th>Create Date Time</th>
+  </tr>
+  <tr>
+    <td>{{ po.purchase_order_number }}</td>
+    <td>{{ po.supplier_id }}</td>
+	<td>{{ po.status_code }}</td>
+	<td>{{ po.create_dateTime }}</td>
+  </tr>
+  </table>
+  
+  <br>
+  
+  <form action="/inbound/addPoDtl" method="post" >
+    {% csrf_token %}
+    <input type="hidden" name="ponbr" value={{ po.purchase_order_number }}>
+    <input type="submit" value="Add PO Dtl">
+  </form>
+
+ 
+{% endblock %}

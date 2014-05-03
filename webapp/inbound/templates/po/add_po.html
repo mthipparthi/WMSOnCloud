@@ -1,0 +1,31 @@
+{% extends "admin\base.html" %}
+
+{% block content %}
+
+<h1>Add Purchase Order</h1>
+<br>
+<br>
+
+  <form name="CreatePO" action="/inbound/createPO" method="post">
+  {% csrf_token %}
+   <label>Organisation ID:</label>
+   <input type="text" name="organisationid" value="HAT">
+   <br>
+   <label>Supplier Name:</label>
+   <select name="locnlist">
+     {% for supplier in suppliers %}
+      <option value={{ supplier.supplier_id }}>{{ supplier.name }}</option>
+	 {% endfor %}
+    </select>
+	<input type="text" name="suppliername">
+	<br>
+	<label>Expected Arrival Date:</label>
+	<input type="date" name="arrivaldate">
+    <input id="save_po" type="submit" value="Save" />
+</form>
+
+<br>
+<br>
+<a href="{% url "po-list" %}">back to list</a>
+
+{% endblock %}

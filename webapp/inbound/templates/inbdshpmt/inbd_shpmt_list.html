@@ -1,0 +1,33 @@
+{% extends "admin\base.html" %}
+
+{% block content %}
+
+<h1>Inbound Shipment Header</h1>
+<br>
+  <table style="width:1000px">
+  <tr>
+    <th>Shipment Number</th>
+	<th>PO Number</th>
+    <th>Status Code</th>
+	<th>Create Date Time</th>
+  </tr>
+  {% for shipment in object_list %}
+  	<tr>
+        <td>
+			<form action="/inbound/listInbdShipmentWithDtls" method="post">
+				{% csrf_token %}
+				<input type="hidden" name="shpmt_nbr" value={{ shipment.inbd_shipment_number }}>
+				<a href=""  onclick="document.forms[0].submit();return false;">{{ shipment.inbd_shipment_number }} </a>
+			</form>
+		</td>
+		<td>{{ shipment.purchase_order_number }}</td>
+		<td>{{ shipment.status_code }}</td>
+		<td>{{ shipment.create_dateTime }}</td>
+	</tr>
+  {% endfor %}
+  </script>
+  </table>
+  
+  <br>
+ 
+{% endblock %}
