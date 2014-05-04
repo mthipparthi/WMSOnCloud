@@ -1,0 +1,26 @@
+{% extends "admin\base.html" %}
+{% block content %}
+
+<h1>Sales Cart List</h1>
+<ul>
+  <br>
+  
+  <table style="width:1000px">
+  <tr>
+    <th>Serial Number</th>
+    <th>Item Qty</th>
+    <th>Date</th>
+	<th>Sales Ref No</th>
+  </tr>
+  {% for cart in object_list %}
+  <tr>
+    <td>{{ cart.sl_num }}</td>
+    <td>{{ cart.item_qty }}</td>
+	<td>{{ cart.txn_date }}</td>
+	<td>{{ cart.sales_ref_no }}</td>
+  </tr>
+  {% endfor %}
+  </table>
+</ul>
+{% endblock %}
+

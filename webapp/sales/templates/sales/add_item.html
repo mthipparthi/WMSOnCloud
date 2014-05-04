@@ -1,0 +1,41 @@
+{% extends "admin\base.html" %}
+
+{% block content %}
+
+<h1>Sales Transaction</h1>
+<br>
+<br>
+
+  <table style="width:1000px">
+  <tr>
+    <th>Invoice Number</th>
+    <th>Store ID</th>
+	<th>Create Date Time</th>
+  </tr>
+  <tr>
+    <td>{{ sellobject.invoice_number }}</td>
+    <td>{{ sellobject.store_id }}</td>
+	<td>{{ sellobject.invoice_dateTime }}</td>
+  </tr>
+  </table>
+
+  <form name="SellItem" action="/sales/sellItem/" method="post">
+  {% csrf_token %}
+   <input type="hidden" name="invoice_nbr" value={{ sellobject.invoice_number }}>
+   <label>Display SKU:</label>
+   <select name="displaySkuList">
+     {% for item in items %}
+      <option value={{ item.sku_id }}>{{ item.dsp_sku }}</option>
+	 {% endfor %}
+    </select>
+	<input type="text" name="dsp_sku">
+	<br>
+	<label>Sold Qty:</label>
+	<input type="text" name="soldQty">
+    <input id="save_sell" type="submit" value="Save" />
+</form>
+
+<br>
+<br>
+
+{% endblock %}
