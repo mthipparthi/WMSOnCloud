@@ -35,6 +35,9 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.views.generic import ListView
 
+#logging handler
+import logging
+
 # Create your views here.
 
 class AjaxableResponseRowMixin(object):
@@ -110,6 +113,8 @@ class DeleteItemMaster(DeleteView):
 
 def searchItem(request):
     error = False
+    logger = logging.getLogger(__name__)
+    logger.debug('Item Name searched is %s', request.POST['item_name'])
     if ('item_name' in request.POST and request.POST['item_name'] != "") or ('item_barcode' in request.POST and request.POST['item_barcode'] != "") or ('item_description' in request.POST and request.POST['item_description'] != "") :
         form = ItemSearchForm(request.POST)
         if form.is_valid():
@@ -132,6 +137,8 @@ def searchItem(request):
 
 def ItemSearchView(request):
     print "ItemSearchView"
+    logger = logging.getLogger(__name__)
+    logger.debug('Item Name searched is %s', request.POST['item_name'])
     if request.method == 'POST':
         form = ItemSearchForm(request.POST)
         if form.is_valid():

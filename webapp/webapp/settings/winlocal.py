@@ -2,6 +2,7 @@
 
 
 from    os.path    import    abspath,    basename,    dirname,    join,    normpath
+from os import environ
 from    sys    import    path
 
 
@@ -191,7 +192,6 @@ DJANGO_APPS    =    (
     #    Admin    panel    and    documentation:
     'django.contrib.admin',
     #    'django.contrib.admindocs',
-    'usermaster',
     'crispy_forms',
     'debug_toolbar',
     'braces',
@@ -199,9 +199,10 @@ DJANGO_APPS    =    (
 
 #    Apps    specific    for    this    project    go    here.
 LOCAL_APPS    =    (
+    'usermaster',
 )
-
-#    See:    https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
+#
+# #    See:    https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS    =    DJANGO_APPS    +    LOCAL_APPS
 ##########    END    APP    CONFIGURATION
 
@@ -212,23 +213,6 @@ AUTH_USER_MODEL    =    'usermaster.UserMaster'
 DEBUG    =    True
 
 
-LOGGING    =    {
-    'version':    1,
-    'disable_existing_loggers':    False,
-    'handlers':    {
-        'console':    {
-            'level':    'DEBUG',
-            'class':    'logging.StreamHandler',
-        }
-    },
-    'loggers':    {
-        'django.db.backends':    {
-            'handlers':    ['console'],
-            'level':    'DEBUG',
-        },
-    }
-}
-
 ##########    LOGGING    CONFIGURATION
 #    See:    https://docs.djangoproject.com/en/dev/ref/settings/#logging
 #    A    sample    logging    configuration.    The    only    tangible    logging
@@ -236,6 +220,68 @@ LOGGING    =    {
 #    the    site    admins    on    every    HTTP    500    error    when    DEBUG=False.
 #    See    http://docs.djangoproject.com/en/dev/topics/logging    for
 #    more    details    on    how    to    customize    your    logging    configuration.
+
+LOG_DIR = join(DJANGO_ROOT, 'log')
+LOGFILE_SIZE = 5 * 1024 * 1024
+
+LOGFILE_COUNT = 5
+environ['LOG_LEVEL'] = 'DEBUG'
+
+LOG_FILE = join(LOG_DIR, 'rsc.log')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format' : "[%(asctime)s] - %(levelname)s - [%(name)s.%(funcName)s:%(lineno)d] %(message)s",
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'tst_log': {
+            'level':environ['LOG_LEVEL'],
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': LOG_FILE,
+            'maxBytes': LOGFILE_SIZE,
+            'backupCount': LOGFILE_COUNT,
+        },
+    },
+    'loggers': {
+    }
+}
+
+RSC_HANDLERS = {}
+RSC_LOGGERS = {}
+
+for app in LOCAL_APPS:
+    LOG_FILE = join(LOG_DIR, app)
+    RSC_HANDLERS[app] = {
+        'level':environ['LOG_LEVEL'],
+        'class':'logging.handlers.RotatingFileHandler',
+        'filename': LOG_FILE,
+        'maxBytes': LOGFILE_SIZE,
+        'backupCount': LOGFILE_COUNT,
+        'formatter': 'standard',
+    }
+
+LOGGING['handlers'].update(RSC_HANDLERS)
+
+
+for app in LOCAL_APPS:
+    RSC_LOGGERS[app] = {
+        'handlers': [app],
+        'level': environ['LOG_LEVEL'],
+        'propagate': True,
+    }
+
+LOGGING['loggers'].update(RSC_LOGGERS)
+
+
 #LOGGING    =    {
 #    'version':    1,
 #    'disable_existing_loggers':    False,

@@ -27,6 +27,8 @@ from django.core import serializers
 
 from crispy_forms.utils import render_crispy_form
 
+import logging
+
 class AjaxableResponseRowMixin(object):
     """
     Mixin to add AJAX support to a form.
@@ -95,8 +97,10 @@ class AjaxableResponseMultiRowMixin(object):
 #    Create    your    views    here.
 def    UserLoginView(request):
     print "UserLoginView"
+    logger = logging.getLogger(__name__)
     if request.method == 'POST':
         print "Inavlid"
+        logger.debug('User Id')
         form = UserLoginForm(request.POST)
         print form.errors
         if form.is_valid():
