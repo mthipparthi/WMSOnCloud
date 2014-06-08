@@ -42,22 +42,6 @@ MANAGERS    =    ADMINS
 ##########    END    MANAGER    CONFIGURATION
 
 
-##########    DATABASE    CONFIGURATION
-#    See:    https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES    =    {
-    'default':    {
-        'ENGINE':    'django.db.backends.',
-        'NAME':    '',
-        'USER':    '',
-        'PASSWORD':    '',
-        'HOST':    '',
-        'PORT':    '',
-    }
-}
-##########    END    DATABASE    CONFIGURATION
-
-
-
 ##########    GENERAL    CONFIGURATION
 #    See:    https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
 TIME_ZONE    =    'America/Los_Angeles'
@@ -200,6 +184,12 @@ DJANGO_APPS    =    (
 #    Apps    specific    for    this    project    go    here.
 LOCAL_APPS    =    (
     'usermaster',
+    'item',
+    'inventory',
+    'location',
+    'storemaster',
+    'inbound',
+    'enterprise',
 )
 #
 # #    See:    https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -342,7 +332,7 @@ EMAIL_BACKEND    =    'django.core.mail.backends.console.EmailBackend'
 DATABASES    =    {
     'default':    {
         'ENGINE':    'django.db.backends.sqlite3',
-        'NAME':    normpath(join(DJANGO_ROOT,    'default.db')),
+        'NAME':    normpath(join(DJANGO_ROOT,    'default.sqlite3')),
         'USER':    '',
         'PASSWORD':    '',
         'HOST':    '',
