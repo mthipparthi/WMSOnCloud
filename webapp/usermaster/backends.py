@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
+import logging
+
 class    EmailAuthBackend(object):
     """
     Email Authentication Backend
@@ -12,10 +14,16 @@ class    EmailAuthBackend(object):
         """ user name is nothing but email id,to be in sync with user auth """
         """ customization we retained this way """
         try:
+            logger = logging.getLogger(__name__)
+            logger.debug("Authentication begins for user - %s", email);
             user = get_user_model().objects.get(email=email)
             if user.check_password(password):
                 return user
+            else:
+                logger.info("Authentication failed for user - %s", email)
+                return None
         except User.DoesNotExist:
+            logger.info("User doesn't exist for user %s", email)
             return None
 
     def get_user(self, user_id):

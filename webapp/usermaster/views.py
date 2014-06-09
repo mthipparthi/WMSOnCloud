@@ -21,11 +21,16 @@ from usermaster.forms import UserCreationForm
 from usermaster.forms import UserUpdateForm
 from usermaster.forms import UserSearchForm
 
+from enterprise.models import EnterpriseMaster
+
 from braces.views import JSONResponseMixin
 from django.core import serializers
 
 
 from crispy_forms.utils import render_crispy_form
+
+from django.core.urlresolvers import reverse
+
 
 import logging
 
@@ -99,8 +104,7 @@ def    UserLoginView(request):
     print "UserLoginView"
     logger = logging.getLogger(__name__)
     if request.method == 'POST':
-        print "Inavlid"
-        logger.debug('User Id')
+        logger.debug('Start user login')
         form = UserLoginForm(request.POST)
         print form.errors
         if form.is_valid():
@@ -108,11 +112,17 @@ def    UserLoginView(request):
             email = request.POST.get('email','')
             password = request.POST.get('password','')
             enterprise_id = request.POST.get('enterprise_id','')
+
+            logger.debug("Login with user id - %s and enterprise id - %s", email, enterprise_id)
+
+            ''' TODO if enterprise is not valid, register error. '''
+
             user = authenticate(email=email,    password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request,    user)
-                    return HttpResponseRedirect('/apphome/')
+            if user is not None and user.is_active:
+                login(request,    user)
+                request.session['organisation_id']=user.enterprise_id
+                request.session['store_id']=user.store_id
+                return HttpResponseRedirect('/apphome/')
         else:
             print "InValid Form"
     else:
@@ -144,26 +154,40 @@ def UserSearchView(request):
         form = UserSearchForm()
     return render(request,'usermaster/user_search_form.html',{'form':form,})
 
-class  UserCreationView(AjaxableResponseRowMixin,CreateView):
-    model = UserMaster
-    form_class = UserCreationForm
-    template_name = 'usermaster/user_create_form.html'
+
+# class  UserCreationView(AjaxableResponseRowMixin,CreateView):
+#     model = UserMaster
+#     form_class = UserCreationForm
+#     template_name = 'usermaster/user_create_form.html'
 
 
 def UserCreationFunc(request):
     print "UserCreationFunc"
+    logger = logging.getLogger(__name__)
+    logger.debug("Begin User Creation with session organisation %s", request.session['organisation_id'])
     if request.method == 'POST':
         print "create post"
-        form = UserCreationForm(request.POST)
+        # Copy the request.POST data as it is immutable
+        # and set the session values on the post data
+        request_post = request.POST.copy()
+        request_post['enterprise_id'] = request.session['organisation_id']
+        form = UserCreationForm(request_post, request=request, hidden=False)
         if form.is_valid():
-            form.save()
-            return {'success': True}
+            logger.debug("Form data is successfully validated")
+            if form.save():
+                logger.debug("User creation succeeded")
+                return reverse('user_detail')
+            else:
+                logger.debug("User creation failed")
+                return {'success': False}
         else:
-            return {'success': True}
+            logger.debug("Form data is failed to validate and errors are %s", form.errors)
+            return {'success': False}
             #form_error = render_crispy_form(form)
             #return {'success': False, 'form_error': form_error}
     else:
-        form = UserCreationForm(None)
+        logger.debug("User creation form generation with organisation %s", request.session['organisation_id'])
+        form = UserCreationForm(None, request=request, hidden=True)
         return render(request,'usermaster/user_create_form.html',{'form':form,})
 
 

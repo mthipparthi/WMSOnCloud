@@ -1,5 +1,6 @@
 from usermaster.models import UserMaster
 from django import forms
+from django.forms.widgets import HiddenInput
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
@@ -10,6 +11,7 @@ from crispy_forms.bootstrap import TabHolder
 from crispy_forms.bootstrap import Tab
 
 
+import logging
 #    Create    your    models    here.
 
 class    UserLoginForm3(forms.Form):
@@ -87,8 +89,19 @@ class    UserCreationForm(forms.ModelForm):
     """
        UserCreationForm
     """
-    def    __init__(self,    *args,    **kwargs):
+    def    __init__(self,  *args,  **kwargs):
+        logger = logging.getLogger(__name__)
+        logger.debug("UserCreationForm Initialisation begins")
+        self.request = kwargs.pop("request")
+        hide_condition = kwargs.pop('hidden', False)
         super(UserCreationForm,    self).__init__(*args,    **kwargs)
+        self.enterprise_id = self.request.session['organisation_id']
+        logger.debug("UserCreationForm - Organisation id from session %s", self.enterprise_id)
+
+        # Make the enterprise id hidden
+        if hide_condition:
+            self.fields['enterprise_id'].widget = HiddenInput()
+
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
         self.helper.form_id = 'id_user_creation_form'
@@ -118,7 +131,6 @@ class    UserCreationForm(forms.ModelForm):
                      'enterprise_id',
                      'store_id',
                      )
-
                  ),
                  Div(Submit('submit',    'Submit',    css_class='btn    btn-default'),css_class='col-lg-offset-3    col-lg-9',),
             )
@@ -126,8 +138,9 @@ class    UserCreationForm(forms.ModelForm):
     class Meta:
         model = UserMaster
         fields = ['title','first_name','last_name',
-                  'email','password','enterprise_id',
-                   'store_id','job_title','date_joined',
+                  'email','password','store_id',
+                  'enterprise_id',
+                  'job_title','date_joined',
                    'date_expiry','is_active']
 
 
