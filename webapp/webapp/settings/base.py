@@ -207,6 +207,7 @@ LOCAL_APPS    =    (
     'storemaster',
     'inbound',
     'enterprise',
+    'rsccore',
 )
 
 #    See:    https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

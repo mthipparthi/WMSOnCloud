@@ -31,6 +31,9 @@ from crispy_forms.utils import render_crispy_form
 
 from django.core.urlresolvers import reverse
 
+# import transction
+from django.db import transaction
+
 
 import logging
 
@@ -122,6 +125,7 @@ def    UserLoginView(request):
                 login(request,    user)
                 request.session['organisation_id']=user.enterprise_id
                 request.session['store_id']=user.store_id
+                request.session['user_id']=user.id
                 return HttpResponseRedirect('/apphome/')
         else:
             print "InValid Form"
@@ -165,19 +169,22 @@ def UserCreationFunc(request):
     print "UserCreationFunc"
     logger = logging.getLogger(__name__)
     logger.debug("Begin User Creation with session organisation %s", request.session['organisation_id'])
+    session_variables = ['enterprise_id', 'user_id']
     if request.method == 'POST':
         print "create post"
-        # Copy the request.POST data as it is immutable
-        # and set the session values on the post data
-        request_post = request.POST.copy()
-        request_post['enterprise_id'] = request.session['organisation_id']
-        form = UserCreationForm(request_post, request=request, hidden=False)
+
+        form = UserCreationForm(request.POST, request=request, sessionvars= session_variables)
+        form.addSessionRelatedFields()
+
         if form.is_valid():
             logger.debug("Form data is successfully validated")
+            logger.debug("Enterprise id value is set - %s", form.cleaned_data['enterprise_id'])
             if form.save():
+                form.clearSessionRelatedFields()
                 logger.debug("User creation succeeded")
                 return reverse('user_detail')
             else:
+                form.clearSessionRelatedFields()
                 logger.debug("User creation failed")
                 return {'success': False}
         else:
@@ -185,11 +192,11 @@ def UserCreationFunc(request):
             return {'success': False}
             #form_error = render_crispy_form(form)
             #return {'success': False, 'form_error': form_error}
+
     else:
         logger.debug("User creation form generation with organisation %s", request.session['organisation_id'])
-        form = UserCreationForm(None, request=request, hidden=True)
+        form = UserCreationForm(None, request=request, sessionvars= session_variables)
         return render(request,'usermaster/user_create_form.html',{'form':form,})
-
 
 
 
