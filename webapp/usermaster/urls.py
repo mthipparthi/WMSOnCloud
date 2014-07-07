@@ -10,6 +10,7 @@ from usermaster.views import UserUpdateView
 from usermaster.views import UserDeleteView
 from usermaster.views import UserDetailView
 from usermaster.views import UserCreationFunc
+from usermaster.views import UserListView
 
 urlpatterns    =    patterns('',
 
@@ -21,5 +22,6 @@ urlpatterns    =    patterns('',
     url(r'^deleteuser/(?P<pk>\d+)/$',    UserDeleteView.as_view(),name='user_delete',),
     url(r'^searchusers/$',    'usermaster.views.UserSearchView',name='user_search',),
     url(r'^user/(?P<pk>\d+)/$', UserDetailView.as_view(), name='user_detail',),
+    url(r'^listusers/$', UserListView.as_view(), name='user_list',),
 )
 

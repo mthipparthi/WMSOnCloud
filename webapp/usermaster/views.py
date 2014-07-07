@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 import json
+from django.utils import simplejson
 
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
@@ -31,8 +32,14 @@ from crispy_forms.utils import render_crispy_form
 
 from django.core.urlresolvers import reverse
 
+from django.shortcuts import render_to_response
+
+from django.contrib import messages
+from django.contrib.messages import get_messages
 # import transction
 from django.db import transaction
+
+from rsccore.util import registerErrorMessage
 
 
 import logging
@@ -118,22 +125,33 @@ def    UserLoginView(request):
 
             logger.debug("Login with user id - %s and enterprise id - %s", email, enterprise_id)
 
-            ''' TODO if enterprise is not valid, register error. '''
+            ''' register error message when the enterprise id is not valid
+            '''
+            validOrganisation = True
+            try:
+                EnterpriseMaster.objects.get(organisation_id=enterprise_id)
+            except EnterpriseMaster.DoesNotExist:
+                registerErrorMessage(request, 1001)
+                #messages.error(request, "Invalid User Id/Password/Organisation Id")
+                logger.debug("Invalid Organisation - %s", enterprise_id)
+                validOrganisation = False
 
-            user = authenticate(email=email,    password=password)
-            if user is not None and user.is_active:
-                login(request,    user)
-                request.session['organisation_id']=user.enterprise_id
-                request.session['store_id']=user.store_id
-                request.session['user_id']=user.id
-                return HttpResponseRedirect('/apphome/')
+            if validOrganisation == True:
+                user = authenticate(email=email,    password=password)
+                if user is not None and user.is_active:
+                    login(request,    user)
+                    request.session['organisation_id']=user.enterprise_id
+                    request.session['store_id']=user.store_id
+                    request.session['user_id']=user.id
+                    return HttpResponseRedirect('/apphome/')
         else:
             print "InValid Form"
-    else:
-        form = UserLoginForm()
-    return render(request,'index.html',{'form':form,})
+
+    form = UserLoginForm()
+    return HttpResponseRedirect('/', {'form' : form})
 
 #    Create    your    views    here.
+@transaction.non_atomic_requests
 def UserSearchView(request):
     if request.method == 'POST':
         form = UserSearchForm(request.POST)
@@ -164,32 +182,44 @@ def UserSearchView(request):
 #     form_class = UserCreationForm
 #     template_name = 'usermaster/user_create_form.html'
 
-
+@transaction.non_atomic_requests()
 def UserCreationFunc(request):
-    print "UserCreationFunc"
     logger = logging.getLogger(__name__)
     logger.debug("Begin User Creation with session organisation %s", request.session['organisation_id'])
     session_variables = ['enterprise_id', 'user_id']
     if request.method == 'POST':
-        print "create post"
 
-        form = UserCreationForm(request.POST, request=request, sessionvars= session_variables)
+        form = UserCreationForm(request.POST, request=request, sessionvars=session_variables)
         form.addSessionRelatedFields()
 
         if form.is_valid():
             logger.debug("Form data is successfully validated")
-            logger.debug("Enterprise id value is set - %s", form.cleaned_data['enterprise_id'])
             if form.save():
+                print "save completed"
+                messages.add_message(request, messages.SUCCESS, 'User successfully created')
                 form.clearSessionRelatedFields()
-                logger.debug("User creation succeeded")
-                return reverse('user_detail')
+                logger.debug("User creation succeeded %s", form.errors)
+                users = get_user_model().objects.filter(email=request.POST['email'])
+                data = serializers.serialize("json", users)
+                #msgData = serializers.serialize("json", get_messages(request))
+                #json_data = simplejson.dumps( {'messages':msgData, 'users':data } )
+                #print json_data
+                response_kwargs={}
+                response_kwargs['content_type'] = 'application/json'
+                print data
+                storage = get_messages(request)
+                for message in storage:
+                    print message
+                return HttpResponse(data, **response_kwargs)
             else:
-                form.clearSessionRelatedFields()
+                print "User Creation Failed"
                 logger.debug("User creation failed")
-                return {'success': False}
         else:
             logger.debug("Form data is failed to validate and errors are %s", form.errors)
-            return {'success': False}
+
+
+        form.clearSessionRelatedFields()
+        return {'success': False}
             #form_error = render_crispy_form(form)
             #return {'success': False, 'form_error': form_error}
 
@@ -197,7 +227,6 @@ def UserCreationFunc(request):
         logger.debug("User creation form generation with organisation %s", request.session['organisation_id'])
         form = UserCreationForm(None, request=request, sessionvars= session_variables)
         return render(request,'usermaster/user_create_form.html',{'form':form,})
-
 
 
 class    UserUpdateView(UpdateView):
@@ -226,4 +255,9 @@ class UserDetailView(DetailView):
         #    'first_name': self.object.first_name,
         #}
         #return self.render_json_response(context_dict)
+
+class UserListView(AjaxableResponseMultiRowMixin, ListView):
+    model = UserMaster
+    template_name = 'usermaster/user_list_form.html'
+
 

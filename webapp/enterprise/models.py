@@ -101,7 +101,7 @@ class EnterpriseMaster(models.Model):
 
     # return the organisation id
     def __unicode__(self):
-        return self.itemorganisation_id_name
+        return self.organisation_id
 
     # reverse url
     def get_absolute_url(self):

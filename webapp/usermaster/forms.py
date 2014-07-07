@@ -14,6 +14,7 @@ import logging
 
 from rsccore.forms import RSCBaseForm
 
+from django.contrib.auth.hashers import make_password
 #    Create    your    models    here.
 
 class    UserLoginForm3(forms.Form):
@@ -92,11 +93,8 @@ class    UserCreationForm(RSCBaseForm):
        UserCreationForm
     """
     def    __init__(self,  *args,  **kwargs):
-        logger = logging.getLogger(__name__)
-        logger.debug("UserCreationForm Initialisation begins")
         super(UserCreationForm,    self).__init__(*args,    **kwargs)
-
-        print "Helper setting - User creation form"
+        print "init is called again"
         self.helper.form_id = 'id_user_creation_form'
         self.helper.form_name = 'id_user_creation_form'
         self.helper.form_action = '/usermaster/createuser/'
@@ -127,6 +125,7 @@ class    UserCreationForm(RSCBaseForm):
     def clean(self):
         logger = logging.getLogger(__name__)
         logger.debug("Clean method is initiated")
+        self.cleaned_data['password'] = make_password(self.cleaned_data['password'])
         return super(UserCreationForm, self).clean()
 
     class Meta:

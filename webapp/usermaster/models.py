@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
 
+import logging
 #    Create    your    models    here.
 class    UserMasterManager(BaseUserManager):
     def    _create_user(self,email, password,is_staff,is_superuser,**extra_fields):
@@ -15,6 +16,8 @@ class    UserMasterManager(BaseUserManager):
         now = timezone.now()
         if not email:
             raise ValueError('The Email must be set')
+        logger = logging.getLogger(__name__)
+        logger.debug("In _create_user")
         email = self.normalize_email(email)
         user = self.model(email=email,is_staff=is_staff,is_active=True,
                         is_superuser=is_superuser,last_login=now,
@@ -80,8 +83,6 @@ class    UserMaster(AbstractBaseUser):
     def get_short_name(self):
         return self.first_name
 
-    def check_password(self,password):
-        return self.password == password
 
     def as_json(self):
         return dict(

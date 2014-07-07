@@ -44,7 +44,6 @@ class  RSCBaseForm(forms.ModelForm):
         logger.debug("Session variables are set enterprise id is %s and store id is %s", self.session_enterprise_id, self.session_store_id)
 
         # set the common form related common elements here
-        print "FormHelper settings"
         self.helper = FormHelper()
         self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'POST'
@@ -64,22 +63,24 @@ class  RSCBaseForm(forms.ModelForm):
                 self.cleaned_data['store_id'] = self.session_store_id
             elif sessionVar == 'user_id':
                 self.cleaned_data['user_id'] = self.session_user_id
+
         return super(RSCBaseForm, self).clean()
 
     ''' Add the session variable name to the list of fields '''
     def addSessionRelatedFields(self):
-        print "add the session variables"
         for sessionVar in self.sessionVars:
             self._meta.fields.append(sessionVar)
-        print "added session variable"
+        return True
 
 
     ''' Remove the sessions variables from the list of the fileds '''
-    def clearSessionRelatedFields(self, sessionVariables):
-        print "remove session varibales"
+    def clearSessionRelatedFields(self):
+        logger = logging.getLogger(__name__)
+        logger.debug("RSCBaseForm clearSessionRelatedFields method is initiated")
         for sessionVar in self.sessionVars:
             self._meta.fields.remove(sessionVar)
-        print "removed session variable"
+        logger.debug("RSCBaseForm clearSessionRelatedFields completed")
+        return True
 
 
     class Meta:

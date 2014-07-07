@@ -4,6 +4,7 @@
 from    os.path    import    abspath,    basename,    dirname,    join,    normpath
 from os import environ
 from    sys    import    path
+from django.contrib.messages.storage.session import SessionStorage
 
 
 ##########    PATH    CONFIGURATION
@@ -279,7 +280,7 @@ LOGGING['handlers'].update(RSC_HANDLERS)
 for app in LOCAL_APPS:
     RSC_LOGGERS[app] = {
         'handlers': [app],
-        'level': os.environ['LOG_LEVEL'],
+        'level': environ['LOG_LEVEL'],
         'propagate': True,
     }
 
@@ -329,3 +330,5 @@ SOUTH_TESTS_MIGRATE    =    False
 ##########    END    SOUTH    CONFIGURATION
 
 CRISPY_TEMPLATE_PACK    =    'bootstrap3'
+
+MESSAGE_STORAGE = 'SessionStorage'
