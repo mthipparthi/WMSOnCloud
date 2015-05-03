@@ -1,4 +1,4 @@
-mission
+Warehouse Management System On Cloud
 =======
 
-mission will be achieved
+This is WMS system to be hosted on cloud to service Small and Medium Companies
